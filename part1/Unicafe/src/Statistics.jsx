@@ -24,6 +24,16 @@ const Calculus = ({good,neutral,bad}) => {
         </>
     )
 }
+//Exercise 1.10: I think this component is what you are requesting from me, if something's wrong, let me know please, I did not understand it well in that case.
+const StatisticsLine = ({text,value}) => {
+    return(
+        <>
+            <button onClick={value}>
+                {text}
+            </button>
+        </>
+    )
+}
 const StateUnicafe = () =>{
 
     const [goodValue, updateGood] = useState(0)
@@ -43,15 +53,9 @@ const StateUnicafe = () =>{
         <>
             <h1>Unicafe Exercise by @manulucena12</h1>
             <h2>Please, rate your experience using this app</h2>
-            <button onClick={increaseGood}>
-                Good 
-            </button>
-            <button onClick={increaseNeutral}>
-                Neutral
-            </button>
-            <button onClick={increaseBad}>
-                Bad
-            </button>
+            <StatisticsLine text='Good' value={increaseGood}/>
+            <StatisticsLine text='Neutral' value={increaseNeutral}/>
+            <StatisticsLine text='Bad' value={increaseBad}/>
             <h1>Statistics</h1>
             <ul>
                 <li>Good: {goodValue} </li>
@@ -59,6 +63,7 @@ const StateUnicafe = () =>{
                 <li>Bad: {badValue} </li>
             </ul>
             <h3> {goodValue + neutralValue + badValue === 0 ? 'Still not feedback given' : <Calculus good={goodValue} neutral={neutralValue} bad={badValue}/> } </h3>
+            
         </>
     )
 }
