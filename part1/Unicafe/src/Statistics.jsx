@@ -58,7 +58,7 @@ const StateUnicafe = () =>{
                 <li>Neutral: {neutralValue} </li>
                 <li>Bad: {badValue} </li>
             </ul>
-            <Calculus good={goodValue} neutral={neutralValue} bad={badValue}/>
+            <h3> {goodValue + neutralValue + badValue === 0 ? 'Still not feedback given' : <Calculus good={goodValue} neutral={neutralValue} bad={badValue}/> } </h3>
         </>
     )
 }
