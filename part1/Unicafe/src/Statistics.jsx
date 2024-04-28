@@ -2,15 +2,14 @@ import { useState } from "react";
 const Ratio = ({good,rates}) =>{
     return(
         <>
-            <h3>Positive ratio: {good/rates*100} %  </h3>
-           
+            <td>Positive ratio: {good/rates*100} %  </td>
         </>
     )
 }
 const Average = ({good,bad,rates}) => {
     return(
         <>
-             <h3>Average: {(good-bad)/rates} </h3>
+             <td>Average: {(good-bad)/rates} </td>
         </>
     )
 }
@@ -18,9 +17,9 @@ const Calculus = ({good,neutral,bad}) => {
     const rates = good + neutral + bad
     return(
         <>
-            <h3>Total: {rates} </h3>
-            <h3> {good === 0 ? 'Still not positive reviews' : <Ratio good={good} rates={rates}/>  }   </h3>
-            <h3>{rates === 0 ? 'Still Not Reviews' : <Average good={good} bad={bad} rates={rates}/>}</h3>
+            <td>Total: {rates} </td>
+            <td> {good === 0 ? 'Still not positive reviews' : <Ratio good={good} rates={rates}/>  }   </td>
+            <td>{rates === 0 ? 'Still Not Reviews' : <Average good={good} bad={bad} rates={rates}/>}</td>
         </>
     )
 }
@@ -56,13 +55,24 @@ const StateUnicafe = () =>{
             <StatisticsLine text='Good' value={increaseGood}/>
             <StatisticsLine text='Neutral' value={increaseNeutral}/>
             <StatisticsLine text='Bad' value={increaseBad}/>
-            <h1>Statistics</h1>
-            <ul>
-                <li>Good: {goodValue} </li>
-                <li>Neutral: {neutralValue} </li>
-                <li>Bad: {badValue} </li>
-            </ul>
-            <h3> {goodValue + neutralValue + badValue === 0 ? 'Still not feedback given' : <Calculus good={goodValue} neutral={neutralValue} bad={badValue}/> } </h3>
+            <table>
+                <tr>
+                    <th> Statistics </th>
+                    
+                </tr>
+                <tr>
+                    <td>Good: {goodValue} </td>
+                </tr>
+                <tr>
+                    <td>Neutral: {neutralValue} </td>
+                </tr>
+                <tr>
+                    <td>Bad: {badValue}</td>
+                </tr>
+                <tr>
+                    <td>{goodValue + neutralValue + badValue === 0 ? 'Still not feedback given' : <Calculus good={goodValue} neutral={neutralValue} bad={badValue}/> }</td>
+                </tr>
+            </table>
             
         </>
     )
