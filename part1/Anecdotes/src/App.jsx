@@ -12,11 +12,19 @@ const App = () => {
   ]
   
   const [selected, setSelected] = useState(0)
+  const [points, increasePoints] = useState([0,0,0,0,0,0,0,0])
   const randomQuote = () => {
     const randomValue = Math.floor(Math.random() * 8);
     setSelected(randomValue); 
   };
-
+  const voteQuote = () => {
+    const newPoints = [...points];
+    newPoints[selected] += 1;
+    increasePoints(newPoints);
+  };
+  const maxVotesIndex = points.reduce((maxIndex, currentValue, currentIndex, arr) => {
+    return currentValue > arr[maxIndex] ? currentIndex : maxIndex;
+  }, 0);
   return (
     <div>
       <button onClick={randomQuote}>
@@ -24,13 +32,16 @@ const App = () => {
       </button>
       <p></p>
       {anecdotes[selected]}
-      <p></p>
-      <button onClick>
+      <p>This quote has {points[selected]} votes  </p>
+      <button onClick= {voteQuote} >
         Vote
       </button>
       <button onClick={randomQuote}>
         Next quote
       </button>
+      <p>Quote with the most votes:</p>
+      <p>{anecdotes[maxVotesIndex]}</p>
+      <p>Number of votes: {points[maxVotesIndex]}</p>
     </div>
   )
 }
