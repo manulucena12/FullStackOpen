@@ -1,4 +1,4 @@
-const Course = ({course}) => {
+const Course = ({course, total}) => {
   return(
     <>
       <h1 key={course.id}> {course.name} </h1>
@@ -9,7 +9,10 @@ const Course = ({course}) => {
           )
         })}
       </ul>
-      <h2>Total: {course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises }  </h2>
+      <h2>Total number of exercises: {total} </h2>
+      <h2>Total number of exercises using .reduce: {course.parts.reduce((total, parts)=>{
+        return total + parts.exercises
+      },0)} </h2>
     </>
   )
 }
@@ -35,8 +38,20 @@ const App = () => {
       }
     ]
   }
+  let total = 0
+  let i = 0
+  for(i=0;i<3;i++){
+    total += course.parts[i].exercises
+  }
+  course.parts.reduce((total, parts) =>{
+    return total + parts.exercises
+  }, 0)
 
-  return <Course course={course} />
+  return (
+    <>
+      <Course course={course} total={total} />
+    </>
+  )
 }
 
 export default App
