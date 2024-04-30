@@ -9,6 +9,7 @@ const Course = ({course}) => {
           )
         })}
       </ul>
+      <h2>Total: {course.parts[0].exercises + course.parts[1].exercises + course.parts[2].exercises }  </h2>
     </>
   )
 }
