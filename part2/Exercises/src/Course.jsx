@@ -70,5 +70,5 @@ const Course = () => {
         },0)} </h2>
       </div>
     )
-  }
-  export default Course
+}
+export default Course
