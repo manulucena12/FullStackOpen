@@ -80,7 +80,7 @@ const List = ({persons})=> {
         </div>
     )
 }
-const App = () => {
+const Example = () => {
     const [persons, setPersons] = useState([
         { name: 'Arto Hellas', phone: '040-123456', id: 1 },
         { name: 'Ada Lovelace', phone: '39-44-5323523', id: 2 },
@@ -96,4 +96,4 @@ const App = () => {
         </div>
       )
 }
-export default App
+export default Example
