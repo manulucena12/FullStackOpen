@@ -1,8 +1,8 @@
 import { useState } from "react"
 import { useEffect } from "react"
-import axios from 'axios'
 import { sendPerson } from "./services/send"
 import { getPerson } from "./services/getPersons"
+import axios from "axios"
 const AddPerson = ({persons, setPersons}) => {
     const [newName, setNewName] = useState('')
     const handleChange = (event) =>{
@@ -69,7 +69,18 @@ const SearchPerson = ({persons}) => {
         </div>
     )
 }
-const List = ({persons})=> {
+const List = ({persons, setPersons})=> {
+    const deletePerson = (id) => {
+        if(window.confirm('Do you want to delete this person?')){
+            axios
+            .delete(`http://localhost:3001/persons/${id}`)
+            .then(()=>{
+                console.log('Successful elimination')
+                alert('Update to see the changes')
+                setPersons()
+        })
+        }
+    }
     return(
         <div>
             <h2>Contact list</h2>
@@ -78,7 +89,8 @@ const List = ({persons})=> {
             .map((person)=>{
                 return(
                     <li key={person.id}> 
-                        <strong>Name: {person.name}.     Phone: {person.phone}</strong>
+                        <strong>Name: {person.name}. Phone: {person.phone}</strong>
+                        <button onClick={()=> deletePerson(person.id)} >Delete</button>
                     </li>
                 )
             })}
