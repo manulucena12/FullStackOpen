@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import axios from 'axios'
+import { sendPerson } from "./services/send"
 const AddPerson = ({persons, setPersons}) => {
     const [newName, setNewName] = useState('')
     const handleChange = (event) =>{
@@ -12,7 +13,7 @@ const AddPerson = ({persons, setPersons}) => {
         setNewPhone(event.target.value)
         console.log('The phone is now changing')
     }
-    const updatePersons = () => {
+    const handleUpdate = () => { 
         event.preventDefault()
         const addPerson = [...persons];
         const res = addPerson.some(person => person.name === newName);
@@ -20,17 +21,19 @@ const AddPerson = ({persons, setPersons}) => {
         if(res || newName === '' || resphone || newPhone === '' ){
             alert("We could not add the person you trying to add, please try again")
         }else{
-            addPerson.push({name: newName, phone: newPhone, id: persons.length +1 })
-            setPersons(addPerson)
-            console.log('New person added')
+            sendPerson({name: newName, phone: newPhone})
+            .then(response=>{
+                setPersons([...persons, response])
+            })
         }
         setNewName('')
+        
     }
     return(
         <div>
             <h1>Phonebook by @manulucena12</h1>
             <h2>Add a person</h2>
-            <form onSubmit={updatePersons}>
+            <form onSubmit={handleUpdate}>
                 Name: <input type="text" onChange={handleChange}/>
                 Phone: <input type="tel" onChange={handlePhone} />
             <button> Add a new person </button>
