@@ -2,6 +2,7 @@ import { useState } from "react"
 import { useEffect } from "react"
 import axios from 'axios'
 import { sendPerson } from "./services/send"
+import { getPerson } from "./services/getPersons"
 const AddPerson = ({persons, setPersons}) => {
     const [newName, setNewName] = useState('')
     const handleChange = (event) =>{
@@ -88,11 +89,10 @@ const List = ({persons})=> {
 const App = () => {
     const [persons, setPersons] = useState([]) 
     useEffect(()=> {
-        axios
-        .get('http://localhost:3001/persons')
-        .then((response)=>{
-            setPersons(response.data)
-        })
+        getPerson()
+        .then(response=>
+            setPersons(response)
+        )
     },[])
     
       return (
