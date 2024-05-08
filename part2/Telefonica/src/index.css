@@ -1,0 +1,16 @@
+h1 {
+    color: rgba(44, 4, 66, 0.932);
+    font-style: italic;
+}
+.note {
+    color: blue
+}
+.error {
+    color: red;
+    background: lightgrey;
+    font-size: 20px;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
