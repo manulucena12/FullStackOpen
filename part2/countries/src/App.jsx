@@ -26,7 +26,18 @@ const App = () => {
     event.preventDefault()
     setCurrency(value)
   }
-
+  const showUSA = (event) => {
+    event.preventDefault()
+    setCurrency('USA')
+  }
+  const showSweden = (event) => {
+    event.preventDefault()
+    setCurrency('Sweden')
+  }
+  const showSpain = (event) => {
+    event.preventDefault()
+    setCurrency('Spain')
+  }
   return (
     <div>
       <form onSubmit={onSearch}>
@@ -36,6 +47,18 @@ const App = () => {
       <pre>
         {JSON.stringify(rates, null, 2)}
       </pre>
+      <form>
+        USA
+        <button onClick={showUSA}>Show</button>
+      </form>
+      <form>
+        Sweden
+        <button onClick={showSweden}>Show</button>
+      </form>
+      <form>
+        Spain
+        <button onClick={showSpain}>Show</button>
+      </form>
     </div>
   )
 }
