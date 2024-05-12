@@ -1,6 +1,8 @@
 const express = require('express')
-const app = express()
+const morgan = require('morgan');
+const app = express()   
 app.use(express.json())
+app.use(morgan('tiny'));
 let persons = [
     { 
       "id": 1,
@@ -58,7 +60,7 @@ app.post('/api/persons/', (req,res)=>{
     const maxId = Math.max(...ids)
     const addedName = persons.some(person => person.name === postBody.name)
     if(addedName || !postBody.name || !postBody.number){
-        res.status(409).end()
+        res.status(409).send({ error: 'name must be unique' })
     }else{
         const newPerson = {
             id: maxId+1,
