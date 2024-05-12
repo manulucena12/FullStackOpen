@@ -56,13 +56,18 @@ app.post('/api/persons/', (req,res)=>{
     const postBody = req.body
     const ids = persons.map(person=> person.id)
     const maxId = Math.max(...ids)
-    const newPerson = {
-        id: maxId+1,
-        name: postBody.name,
-        number: postBody.number
+    const addedName = persons.some(person => person.name === postBody.name)
+    if(addedName || !postBody.name || !postBody.number){
+        res.status(409).end()
+    }else{
+        const newPerson = {
+            id: maxId+1,
+            name: postBody.name,
+            number: postBody.number
+        }
+        persons = [...persons, newPerson]
+        res.json(newPerson)
     }
-    persons = [...persons, newPerson]
-    res.json(newPerson)
 })
 const PORT = 3001
 app.listen(PORT, ()=>{
