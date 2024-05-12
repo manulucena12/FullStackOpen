@@ -1,8 +1,17 @@
 const express = require('express')
-const morgan = require('morgan');
+const morgan = require('morgan')
 const app = express()   
 app.use(express.json())
-app.use(morgan('tiny'));
+app.use(morgan('tiny'))
+function customPostFormat(tokens, req, res) {
+    return JSON.stringify({
+      method: tokens.method(req, res),
+      url: tokens.url(req, res),
+      status: tokens.status(req, res),
+      requestBody: JSON.stringify(req.body)
+    });
+}
+app.use(morgan(customPostFormat))
 let persons = [
     { 
       "id": 1,
