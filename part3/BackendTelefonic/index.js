@@ -51,6 +51,19 @@ app.delete('/api/persons/:id', (req,res)=>{
     persons = persons.filter(person => person.id !== selectedId)
     res.json(persons)
 })
+// I used the biggest Id method instead of Math.random() because it eliminates any posibility of coincidences
+app.post('/api/persons/', (req,res)=>{
+    const postBody = req.body
+    const ids = persons.map(person=> person.id)
+    const maxId = Math.max(...ids)
+    const newPerson = {
+        id: maxId+1,
+        name: postBody.name,
+        number: postBody.number
+    }
+    persons = [...persons, newPerson]
+    res.json(newPerson)
+})
 const PORT = 3001
 app.listen(PORT, ()=>{
     console.log(`http://localhost:${PORT}`)
