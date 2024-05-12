@@ -29,7 +29,15 @@ app.get('/', (req,res)=>{
 app.get('/api/persons', (req,res) => {
     res.json(persons)
 })
+app.get('/info', (req,res)=>{
+    const ids = persons.map(person=> person.id)
+    const maxId = Math.max(...ids)
+    const currentDate = new Date ()
+    res.send(`<p><h1>The phonebook registered ${maxId} persons</h1>
+        <h2>${currentDate}</h2>
+    </p>`)
+})
 const PORT = 3001
 app.listen(PORT, ()=>{
-    console.log(`http://localhost:${PORT}/`)
+    console.log(`http://localhost:${PORT}`)
 })
