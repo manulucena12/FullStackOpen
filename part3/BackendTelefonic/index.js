@@ -37,6 +37,15 @@ app.get('/info', (req,res)=>{
         <h2>${currentDate}</h2>
     </p>`)
 })
+app.get('/api/persons/:id', (req,res)=>{
+    const selectedId = Number(req.params.id)
+    const personId = persons.find(person => person.id === selectedId)
+    if(personId){
+        res.json(personId)
+    }else{
+        res.status(404).end()
+    }
+})
 const PORT = 3001
 app.listen(PORT, ()=>{
     console.log(`http://localhost:${PORT}`)
