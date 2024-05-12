@@ -46,6 +46,11 @@ app.get('/api/persons/:id', (req,res)=>{
         res.status(404).end()
     }
 })
+app.delete('/api/persons/:id', (req,res)=>{
+    const selectedId = Number(req.params.id)
+    persons = persons.filter(person => person.id !== selectedId)
+    res.json(persons)
+})
 const PORT = 3001
 app.listen(PORT, ()=>{
     console.log(`http://localhost:${PORT}`)
