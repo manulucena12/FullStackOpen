@@ -45,7 +45,7 @@ function App() {
         })}
       </ul>
       <form>
-        <h1>Add person</h1>
+        <h1>Add persons</h1>
         <h2>Name:</h2>
         <input type="text" value={newName} onChange={handleValue} />
         <h2>Phone</h2>
