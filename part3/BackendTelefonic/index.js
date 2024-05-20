@@ -43,10 +43,13 @@ app.get('/api/persons/:id', (req,res)=>{
         res.status(404).end()
     }
 })
-app.delete('/api/persons/:id', (req,res)=>{
+app.delete('/api/persons/:id', (req,res,next)=>{
     Person.findByIdAndDelete(req.params.id)
     .then(response=>{
         res.status(204).end()
+    })
+    .catch(error=>{
+        next(error)
     })
 })
 // I used the biggest Id method instead of Math.random() because it eliminates any posibility of coincidences
@@ -59,6 +62,14 @@ app.post('/api/persons/', (req,res)=>{
     .then(response=>{
         res.json(response)
     })
+})
+app.use((error,req,res,next)=>{
+    console.log(error.name)
+    if(error.name === 'CastError'){
+        res.status(404).end()
+    }else{
+        res.status(503).end()
+    }
 })
 const PORT = process.env.PORT || 3001
 app.listen(PORT, ()=>{ 
