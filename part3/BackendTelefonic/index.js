@@ -52,7 +52,7 @@ app.delete('/api/persons/:id', (req,res,next)=>{
     })
 })
 // I used the biggest Id method instead of Math.random() because it eliminates any posibility of coincidences
-app.post('/api/persons/', (req,res)=>{
+app.post('/api/persons/', (req,res,next)=>{
     const newPerson =  new Person ({
         name: req.body.name,
         number: req.body.number
@@ -60,6 +60,9 @@ app.post('/api/persons/', (req,res)=>{
     newPerson.save()
     .then(response=>{
         res.json(response)
+    })
+    .catch(error=>{
+        next(error)
     })
 })
 app.put('/api/persons/:id', (req,res,next)=>{
@@ -83,6 +86,8 @@ app.use((error,req,res,next)=>{
     console.log(error.name)
     if(error.name === 'CastError'){
         res.status(404).end()
+    }else if(error.name === 'ValidationError'){
+        res.status(304).send({error: 'The object cant be validated '})
     }else{
         res.status(503).end()
     }
