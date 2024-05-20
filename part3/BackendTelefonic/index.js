@@ -50,21 +50,14 @@ app.delete('/api/persons/:id', (req,res)=>{
 })
 // I used the biggest Id method instead of Math.random() because it eliminates any posibility of coincidences
 app.post('/api/persons/', (req,res)=>{
-    const postBody = req.body
-    const ids = persons.map(person=> person.id)
-    const maxId = Math.max(...ids)
-    const addedName = persons.some(person => person.name === postBody.name)
-    if(addedName || !postBody.name || !postBody.number){
-        res.status(409).send({ error: 'name must be unique' })
-    }else{
-        const newPerson = {
-            id: maxId+1,
-            name: postBody.name,
-            number: postBody.number
-        }
-        persons = [...persons, newPerson]
-        res.json(newPerson)
-    }
+    const newPerson =  new Person ({
+        name: req.body.name,
+        number: req.body.number
+    })
+    newPerson.save()
+    .then(response=>{
+        res.json(response)
+    })
 })
 const PORT = process.env.PORT || 3001
 app.listen(PORT, ()=>{ 
