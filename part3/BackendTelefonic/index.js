@@ -1,3 +1,5 @@
+/* I don't know why i can´t push the frontend to github, but i made sure it can be work with 
+all the changes i've made in the backend, if you need the files of the front, send me a email at mlucenasalas@gmail.com */
 require ('./mongo')
 const Person = require ('./modules/person')
 const express = require('express')
@@ -35,13 +37,10 @@ app.get('/info', (req,res)=>{
     </p>`)
 })
 app.get('/api/persons/:id', (req,res)=>{
-    const selectedId = Number(req.params.id)
-    const personId = persons.find(person => person.id === selectedId)
-    if(personId){
-        res.json(personId)
-    }else{
-        res.status(404).end()
-    }
+    Person.findById(req.params.id)
+    .then(person=>{
+        res.json(person)
+    })
 })
 app.delete('/api/persons/:id', (req,res,next)=>{
     Person.findByIdAndDelete(req.params.id)
