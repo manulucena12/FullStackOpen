@@ -44,9 +44,10 @@ app.get('/api/persons/:id', (req,res)=>{
     }
 })
 app.delete('/api/persons/:id', (req,res)=>{
-    const selectedId = Number(req.params.id)
-    persons = persons.filter(person => person.id !== selectedId)
-    res.json(persons)
+    Person.findByIdAndDelete(req.params.id)
+    .then(response=>{
+        res.status(204).end()
+    })
 })
 // I used the biggest Id method instead of Math.random() because it eliminates any posibility of coincidences
 app.post('/api/persons/', (req,res)=>{
