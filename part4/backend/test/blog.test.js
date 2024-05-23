@@ -2,7 +2,7 @@ const supertest = require('supertest')
 const {app,server} = require('../index')
 const { default: mongoose } = require('mongoose')
 const api = supertest(app)
-const {dummy, totalLikes} = require('../utils/list_helper')
+const {dummy, totalLikes, favouriteBlog} = require('../utils/list_helper')
 
 test('Checking number of blogs', ()=>{
     const blogs = []
@@ -16,7 +16,7 @@ describe('Total Likes', ()=>{
           "title": "Donda",
           "author": "Kanye West",
           "url": "URl",
-          "likes": 3,
+          "likes": 6,
           "id": "664c3586936f68cc996157a3"
         },
         {
@@ -30,13 +30,17 @@ describe('Total Likes', ()=>{
           "title": "Pedro",
           "author": "Manu",
           "url": "URll",
-          "likes": 4,
+          "likes": 1,
           "id": "664df8626540763654da491b"
         }
     ]
     test('Checking if the total of likes is 11', ()=>{
         const result = totalLikes(myBlogs)
         expect(result).toBe(11)
+    })
+    test('Finding the most liked blog', ()=>{
+      const result = favouriteBlog(myBlogs)
+      expect(result).toEqual(myBlogs[0])
     })
 })
 
