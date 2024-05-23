@@ -76,6 +76,15 @@ test('Does it return the correct number of objects?', async ()=>{
   expect(lengthBody).toBe(3)
 })
 
+test('Is ID the identificator?', async ()=>{
+  const result = await api.get('/api/blogs')
+  const namedPropperly = result.body
+  namedPropperly.forEach(blog => {
+    expect(blog.id).toBeDefined()
+    expect(blog._id).toBeUndefined()
+  })
+})
+
 afterAll(()=>{
     mongoose.connection.close()
     server.close()
