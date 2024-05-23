@@ -38,6 +38,13 @@ app.post('/api/blogs', (request, response) => {
   }
 })
 
+app.delete('/api/blogs/:id', (req,res)=>{
+  Blog.findByIdAndDelete(req.params.id)
+  .then(result=>{
+    res.status(204).end()
+  })
+})
+
 const PORT = process.env.PORT
 
 const server = app.listen(PORT, () => {

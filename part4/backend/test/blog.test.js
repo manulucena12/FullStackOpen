@@ -128,6 +128,12 @@ test('Backend return 400', async ()=>{
   .expect(400)
 })
 
+test.skip('Deleting object', async ()=>{
+  await api
+  .delete('/api/blogs/664f4b97fab76f9f75f2e90c')
+  .expect(204)
+})
+
 afterAll(()=>{
     mongoose.connection.close()
     server.close()
