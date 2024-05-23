@@ -2,7 +2,7 @@ const supertest = require('supertest')
 const {app,server} = require('../index')
 const { default: mongoose } = require('mongoose')
 const api = supertest(app)
-const {dummy, totalLikes, favouriteBlog, mostBlogs} = require('../utils/list_helper')
+const {dummy, totalLikes, favouriteBlog, mostBlogs, newMostLikes} = require('../utils/list_helper')
 
 test('Checking number of blogs', ()=>{
     const blogs = []
@@ -51,6 +51,14 @@ describe('Total Likes', ()=>{
         "blogs" : myBlogs[1].blogs
       }
       const result = mostBlogs(myBlogs)
+      expect(hypo).toEqual(result)
+    })
+    test('Who is the most liked author?', ()=>{
+      const hypo = {
+        "author": myBlogs[0].author,
+        "likes": myBlogs[0].likes
+      }
+      const result = newMostLikes(myBlogs)
       expect(hypo).toEqual(result)
     })
 })
