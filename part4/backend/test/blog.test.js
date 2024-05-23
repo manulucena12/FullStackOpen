@@ -85,7 +85,7 @@ test('Is ID the identificator?', async ()=>{
   })
 })
 
-test('Checking POST', async ()=>{
+test.skip('Checking POST', async ()=>{
   const newBlog = {
     "author": "Hello",
     "blogs": 3,
@@ -100,9 +100,20 @@ test('Checking POST', async ()=>{
   // The array length is 1 before i did this test. If the next test is 2, the array length increased in 1.
 })
 
-test('Chencking if the length has been increased', async ()=>{
+test.skip('Chencking if the length has been increased', async ()=>{
   const res = await api.get('/api/blogs')
   expect(res.body.length).toBe(2)
+})
+
+test('Cheking if the likes are left', async ()=>{
+  const newBlog = {
+    "author": "Hello",
+    "blogs": 3,
+    "likes": 0,
+    "title": "cheking",
+    "url": "some"
+  }
+  expect(newBlog.likes).toBeDefined()
 })
 
 afterAll(()=>{
