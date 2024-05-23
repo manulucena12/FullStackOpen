@@ -4,12 +4,12 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 const Blog = require('./modules/blog')
 require('dotenv').config();
-const {MONGO_DB_URI, MONGO_DB_URI_TEST, DOTE_ENV} = process.env
-const mongoUrl = DOTE_ENV === 'test'
+const {MONGO_DB_URI, MONGO_DB_URI_TEST, NODE_ENV} = process.env
+const mongoUrl = NODE_ENV === 'test'
 ? MONGO_DB_URI_TEST
 : MONGO_DB_URI
 mongoose.connect(mongoUrl)
-.then( ()=>{
+.then(()=>{
   console.log('Sucessful connection')
 })
 

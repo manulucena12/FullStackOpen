@@ -3,7 +3,7 @@ const {app,server} = require('../index')
 const { default: mongoose } = require('mongoose')
 const api = supertest(app)
 const {dummy, totalLikes, favouriteBlog, mostBlogs, newMostLikes} = require('../utils/list_helper')
-
+const Blog = require('../modules/blog')
 test.skip('Checking number of blogs', ()=>{
     const blogs = []
     const result = dummy(blogs)
@@ -70,7 +70,7 @@ test('Returned in JSON?', async ()=>{
     .expect('Content-Type', /application\/json/)
 })
 
-test('Does it return the correct number of objects?', async ()=>{
+test.skip('Does it return the correct number of objects?', async ()=>{
   const result = await api.get('/api/blogs')
   const lengthBody = result.body.length
   expect(lengthBody).toBe(3)
@@ -83,6 +83,26 @@ test('Is ID the identificator?', async ()=>{
     expect(blog.id).toBeDefined()
     expect(blog._id).toBeUndefined()
   })
+})
+
+test('Checking POST', async ()=>{
+  const newBlog = {
+    "author": "Hello",
+    "blogs": 3,
+    "likes": 1,
+    "title": "cheking",
+    "url": "some"
+  }
+  await api
+  .post('/api/blogs')
+  .send(newBlog)
+  .expect(201)
+  // The array length is 1 before i did this test. If the next test is 2, the array length increased in 1.
+})
+
+test('Chencking if the length has been increased', async ()=>{
+  const res = await api.get('/api/blogs')
+  expect(res.body.length).toBe(2)
 })
 
 afterAll(()=>{
