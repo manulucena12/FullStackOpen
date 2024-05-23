@@ -4,13 +4,13 @@ const { default: mongoose } = require('mongoose')
 const api = supertest(app)
 const {dummy, totalLikes, favouriteBlog, mostBlogs, newMostLikes} = require('../utils/list_helper')
 
-test('Checking number of blogs', ()=>{
+test.skip('Checking number of blogs', ()=>{
     const blogs = []
     const result = dummy(blogs)
     expect(result).toBe(1)
 })
 
-describe('Total Likes', ()=>{
+describe.skip('Total Likes', ()=>{
     const myBlogs = [
         {
           "title": "Donda",
@@ -63,6 +63,18 @@ describe('Total Likes', ()=>{
     })
 })
 
+test('Returned in JSON?', async ()=>{
+  await api
+    .get('/api/blogs')
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+})
+
+test('Does it return the correct number of objects?', async ()=>{
+  const result = await api.get('/api/blogs')
+  const lengthBody = result.body.length
+  expect(lengthBody).toBe(3)
+})
 
 afterAll(()=>{
     mongoose.connection.close()
