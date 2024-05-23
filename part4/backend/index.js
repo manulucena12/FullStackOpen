@@ -27,11 +27,15 @@ app.get('/api/blogs', (request, response) => {
 app.post('/api/blogs', (request, response) => {
   const blog = new Blog(request.body)
 
-  blog
+  if(!request.body.title || !request.body.url){
+    response.status(400).end()
+  }else{
+    blog
     .save()
     .then(result => {
       response.status(201).json(result)
     })
+  }
 })
 
 const PORT = process.env.PORT

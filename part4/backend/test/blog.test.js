@@ -116,6 +116,18 @@ test('Cheking if the likes are left', async ()=>{
   expect(newBlog.likes).toBeDefined()
 })
 
+test('Backend return 400', async ()=>{
+  const newBlog = {
+    "author": "Hello",
+    "blogs": 3,
+    "likes": 1,
+    "url": "some"
+  }
+  await api
+  .post('/api/blogs')
+  .expect(400)
+})
+
 afterAll(()=>{
     mongoose.connection.close()
     server.close()
