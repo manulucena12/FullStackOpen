@@ -134,6 +134,12 @@ test.skip('Deleting object', async ()=>{
   .expect(204)
 })
 
+test('Updating likes', async ()=>{
+  await api
+  .put('/api/blogs/664f4b97fab76f9f75f2e90c')
+  .expect(200)
+})
+
 afterAll(()=>{
     mongoose.connection.close()
     server.close()

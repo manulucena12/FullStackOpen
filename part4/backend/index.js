@@ -45,6 +45,37 @@ app.delete('/api/blogs/:id', (req,res)=>{
   })
 })
 
+app.put('/api/blogs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  // Verifica si el ID es un ObjectId válido
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'malformatted id' });
+  }
+
+  try {
+    const getBlog = await Blog.findById(id);
+    if (!getBlog) {
+      return res.status(404).json({ error: 'blog not found' });
+    }
+
+    const updatedBlog = {
+      author: req.body.author || getBlog.author,
+      blogs: req.body.blogs || getBlog.blogs,
+      likes: (req.body.likes !== undefined) ? req.body.likes + 1 : getBlog.likes + 1,
+      title: req.body.title || getBlog.title,
+      url: req.body.url || getBlog.url
+    };
+
+    const result = await Blog.findByIdAndUpdate(id, updatedBlog, { new: true, runValidators: true });
+    res.json(result);
+
+  } catch (error) {
+    res.status(500).json({ error: 'something went wrong' });
+  }
+});
+
+
 const PORT = process.env.PORT
 
 const server = app.listen(PORT, () => {
