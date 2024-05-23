@@ -17,8 +17,20 @@ const favouriteBlog = (blogs) => {
     return popularBlog
 }
 
+const mostBlogs = (blogs) => {
+    const blogList = blogs.map(blog => blog.blogs)
+    const mostBlogged = Math.max(...blogList)
+    const mostAuthor = blogs.find(blog => blog.blogs === mostBlogged)
+    const result = {
+        "author": mostAuthor.author,
+        "blogs": mostAuthor.blogs
+    }
+    return result
+}
+
 module.exports = {
     dummy,
+    mostBlogs,
     favouriteBlog,
     totalLikes
 }
