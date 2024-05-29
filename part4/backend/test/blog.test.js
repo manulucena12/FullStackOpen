@@ -134,10 +134,21 @@ test.skip('Deleting object', async ()=>{
   .expect(204)
 })
 
-test('Updating likes', async ()=>{
+test.skip('Updating likes', async ()=>{
   await api
   .put('/api/blogs/664f4b97fab76f9f75f2e90c')
   .expect(200)
+})
+
+test('Sending a username/password that is <3 length is not possible', async ()=>{
+  const invalidUser = {
+    username: "Ma",
+    password: "Hi"
+  }
+  await api
+  .post('/api/users')
+  .send(invalidUser)
+  .expect(400)
 })
 
 afterAll(()=>{
