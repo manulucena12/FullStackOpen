@@ -3,6 +3,7 @@ const app = express()
 const cors = require('cors')
 const mongoose = require('mongoose')
 const Blog = require('./modules/blog')
+const userRouter = require('./controllers/userRouter')
 require('dotenv').config();
 const {MONGO_DB_URI, MONGO_DB_URI_TEST, NODE_ENV} = process.env
 const mongoUrl = NODE_ENV === 'test'
@@ -75,6 +76,7 @@ app.put('/api/blogs/:id', async (req, res) => {
   }
 });
 
+app.use('/api/users', userRouter)
 
 const PORT = process.env.PORT
 
