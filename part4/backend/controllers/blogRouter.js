@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 const bodyParser = require('body-parser');
 const getToken = require('../middlewares/getToken');
+const getUser = require('../middlewares/getUser');
+
 blogRouter.use(bodyParser.json())
 blogRouter.get('/', (request, response) => {
     Blog.find({})
@@ -14,45 +16,41 @@ blogRouter.get('/', (request, response) => {
       .then(blogs => {
         response.json(blogs);
       });
-  });
-blogRouter.post('/', getToken, async (request, response) => {
-  const user = await User.findById(request.body.userId)
-  if(!user){
-    response.status(400).send({error: 'Incorrect ID'})
-  }else{
-    try{
-      const newBlog = new Blog({
-        author: request.body.author,
-        likes: request.body.likes,
-        title: request.body.title, 
-        url: request.body.url, 
-        user: user._id
-        })
-        const savedBlog = await newBlog.save()
-        user.blogs = user.blogs.concat(savedBlog._id)
-        await user.save()
-        response.status(201).json({Status: 'Blog created succesfully'})
-      }
-      catch(error){
-          console.log(error)
-          response.status(500).json({error: 'Something went wrong'})
-      }
-    }
 });
 
-blogRouter.delete('/:id', getToken, async (req, res) => { // Usamos authMiddleware para obtener req.userId
+blogRouter.post('/', getToken, getUser, async (request, response) => {
+  try{
+    const newBlog = new Blog({
+      author: request.body.author,
+      likes: request.body.likes,
+      title: request.body.title, 
+      url: request.body.url, 
+      user: request.userId
+    })
+    const savedBlog = await newBlog.save()
+    const user = request.user
+    user.blogs = user.blogs.concat(savedBlog._id)
+    await user.save()
+    response.status(201).json({Status: 'Blog created succesfully'})
+    }
+  catch(error){
+      console.log(error)
+      response.status(500).json({error: 'Something went wrong'})
+  }
+});
+
+blogRouter.delete('/:id', getToken, getUser, async (req, res) => { 
   try {
     const blogToEliminate = await Blog.findById(req.params.id)
     if (!blogToEliminate) {
-      return res.status(404).json({ error: 'Blog not found' })
+      res.status(404).json({ error: 'Blog not found' })
     }
     const sameUser = blogToEliminate.user.toString() === req.userId
-    
     if (!sameUser){
       return res.status(401).json({ error: 'Unauthorized' })
     }
     await Blog.findByIdAndDelete(req.params.id);
-    const userToUpdate = await User.findById(req.userId)
+    const userToUpdate = req.user
     userToUpdate.blogs = userToUpdate.blogs.filter(blog => blog.toString() !== blogToEliminate._id.toString())
     await userToUpdate.save()
     res.status(204).json({ status: 'Eliminated' })
@@ -61,7 +59,6 @@ blogRouter.delete('/:id', getToken, async (req, res) => { // Usamos authMiddlewa
     res.status(500).json({error: 'Something went wrong'})
   }
 });
-
 
 blogRouter.put('/:id', async (req, res) => {
   const { id } = req.params;

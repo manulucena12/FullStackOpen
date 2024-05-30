@@ -3,6 +3,7 @@ const User = require('../modules/users')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require('dotenv').config();
+
 loginRouter.post('/', async (req,res)=>{
     try{
         const loggedUser = await User.findOne({username: req.body.username})
