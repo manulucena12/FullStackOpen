@@ -40,11 +40,28 @@ blogRouter.post('/', getToken, async (request, response) => {
     }
 });
 
-blogRouter.delete('/:id', (req, res) => {
-  Blog.findByIdAndDelete(req.params.id).then(result => {
-    res.status(204).end();
-  });
+blogRouter.delete('/:id', getToken, async (req, res) => { // Usamos authMiddleware para obtener req.userId
+  try {
+    const blogToEliminate = await Blog.findById(req.params.id)
+    if (!blogToEliminate) {
+      return res.status(404).json({ error: 'Blog not found' })
+    }
+    const sameUser = blogToEliminate.user.toString() === req.userId
+    
+    if (!sameUser){
+      return res.status(401).json({ error: 'Unauthorized' })
+    }
+    await Blog.findByIdAndDelete(req.params.id);
+    const userToUpdate = await User.findById(req.userId)
+    userToUpdate.blogs = userToUpdate.blogs.filter(blog => blog.toString() !== blogToEliminate._id.toString())
+    await userToUpdate.save()
+    res.status(204).json({ status: 'Eliminated' })
+  }catch (error) {
+    console.error(error);
+    res.status(500).json({error: 'Something went wrong'})
+  }
 });
+
 
 blogRouter.put('/:id', async (req, res) => {
   const { id } = req.params;
