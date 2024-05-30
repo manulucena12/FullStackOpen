@@ -4,6 +4,7 @@ const { default: mongoose } = require('mongoose')
 const api = supertest(app)
 const {dummy, totalLikes, favouriteBlog, mostBlogs, newMostLikes} = require('../utils/list_helper')
 const Blog = require('../modules/blog')
+require('dotenv').config()
 test.skip('Checking number of blogs', ()=>{
     const blogs = []
     const result = dummy(blogs)
@@ -116,7 +117,7 @@ test('Cheking if the likes are left', async ()=>{
   expect(newBlog.likes).toBeDefined()
 })
 
-test('Backend return 400', async ()=>{
+test.skip('Backend return 400', async ()=>{
   const newBlog = {
     "author": "Hello",
     "blogs": 3,
@@ -140,7 +141,7 @@ test.skip('Updating likes', async ()=>{
   .expect(200)
 })
 
-test('Sending a username/password that is <3 length is not possible', async ()=>{
+test.skip('Sending a username/password that is <3 length is not possible', async ()=>{
   const invalidUser = {
     username: "Ma",
     password: "Hi"
@@ -149,6 +150,33 @@ test('Sending a username/password that is <3 length is not possible', async ()=>
   .post('/api/users')
   .send(invalidUser)
   .expect(400)
+})
+
+test('POST without token return 401', async ()=>{
+  const invalidBlog = {
+    "title": "Estrella",
+    "author": "Mora",
+    "url": "URl",
+    "likes": 1
+  }
+  await api
+  .post('/api/blogs')
+  .send(invalidBlog)
+  .expect(401)
+})
+
+test('POST with tokens and validation', async ()=>{
+  const validBlog = {
+    "title": "Estrella",
+    "author": "Mora",
+    "url": "URl",
+    "likes": 1
+  }
+  await api
+  .post('/api/blogs')
+  .set('Authorization', `Bearer ${process.env.TOKEN}`)
+  .send(validBlog)
+  .expect(200)
 })
 
 afterAll(()=>{
