@@ -3,6 +3,10 @@ const Blog = require('../modules/blog');
 const mongoose = require('mongoose');
 const blogRouter = express.Router();
 const User = require('../modules/users')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
+const bodyParser = require('body-parser')
+blogRouter.use(bodyParser.json())
 blogRouter.get('/', (request, response) => {
     Blog.find({})
       .populate('user', { username: 1, name: 1 }) 
@@ -10,29 +14,40 @@ blogRouter.get('/', (request, response) => {
         response.json(blogs);
       });
   });
-
 blogRouter.post('/', async (request, response) => {
-  const user = await User.findById(request.body.userId)
-  if(!user){
-    response.status(400).send({error: 'Incorrect ID'})
+  let token = null
+  const authorization = request.get('authorization')
+  if(authorization && authorization.toLowerCase().startsWith('bearer')){
+    token = authorization.substring(7)
+    let decodedToken = jwt.verify(token, process.env.SECRET_WORD)
+    if(!decodedToken.id){
+      res.status(401).json({error: 'Unauthorized'})
+    }else{
+      const user = await User.findById(request.body.userId)
+      if(!user){
+      response.status(400).send({error: 'Incorrect ID'})
+      }else{
+      try{
+          const newBlog = new Blog({
+              author: request.body.author,
+              likes: request.body.likes,
+              title: request.body.title, 
+              url: request.body.url, 
+              user: user._id
+          })
+          const savedBlog = await newBlog.save()
+          user.blogs = user.blogs.concat(savedBlog._id)
+          await user.save()
+          response.status(201).json({Status: 'Blog created succesfully'})
+      }
+      catch(error){
+          console.log(error)
+          response.status(500).json({error: 'Something went wrong'})
+      }
+    }
+  }
   }else{
-    try{
-        const newBlog = new Blog({
-            author: request.body.author,
-            likes: request.body.likes,
-            title: request.body.title, 
-            url: request.body.url, 
-            user: user._id
-        })
-        const savedBlog = await newBlog.save()
-        user.blogs = user.blogs.concat(savedBlog._id)
-        await user.save()
-        response.status(201).json({error: 'Blog created succesfully'})
-    }
-    catch(error){
-        console.log(error)
-        response.status(500).json({error: 'Something went wrong'})
-    }
+    res.status(401).json({error: 'Unauthorized'})
   }
 });
 
