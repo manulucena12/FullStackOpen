@@ -19,6 +19,9 @@ export const Login = ({setUser}) => {
         setUser(loggedUser)
         setPassword('')
         setUsername('')
+        window.localStorage.setItem(
+            'loggedBlogAppUser', JSON.stringify(loggedUser)
+        )
     }
     return(
         <>

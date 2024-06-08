@@ -13,6 +13,11 @@ const App = () => {
       setBlogs(getBlogs)
     }
     renderBlogs()
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+    }
   }, [])
   
   return (
@@ -22,6 +27,7 @@ const App = () => {
         ? <Blogs 
             blogs={blogs}
             user={user}
+            setUser={setUser}
           />
         : <Login 
             setUser={setUser}
