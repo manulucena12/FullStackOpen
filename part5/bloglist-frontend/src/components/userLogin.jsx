@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { loginService } from "../services/loginPost"
-export const Login = ({setUser, setToken, token}) => {
+export const Login = ({setUser, setToken, token, setMessage}) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const handleUsername = (event) => {
@@ -15,15 +15,21 @@ export const Login = ({setUser, setToken, token}) => {
             username,
             password
         }
-        const loggedUser = await loginService(userLog)
-        setUser(loggedUser)
-        setPassword('')
-        setUsername('')
-        window.localStorage.setItem(
-            'loggedBlogAppUser', JSON.stringify(loggedUser)
-        )
-        setToken(`Bearer ${loggedUser.token}`)
-        console.log(token)
+        try{
+            const loggedUser = await loginService(userLog)
+            setUser(loggedUser)
+            setPassword('')
+            setUsername('')
+            window.localStorage.setItem(
+                'loggedBlogAppUser', JSON.stringify(loggedUser)
+            )
+            setToken(`Bearer ${loggedUser.token}`)
+            console.log(token)
+            setMessage('Logged succesfully')
+        }
+        catch{
+            setMessage('Error login failed')
+        }
     }
     return(
         <>

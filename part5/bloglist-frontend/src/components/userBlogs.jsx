@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { postBlogService } from "../services/createBlog"
-export const Blogs = ({blogs, user, setUser, token, setBlogs}) => {
+export const Blogs = ({blogs, user, setUser, token, setBlogs, setMessage}) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const handleTitle = (event) => {
@@ -22,9 +22,11 @@ export const Blogs = ({blogs, user, setUser, token, setBlogs}) => {
         try {
             const blogged = await postBlogService(newBlog, token)
             setBlogs([...blogs, blogged])
+            setMessage(`Blog ${blogged.title} by ${blogged.author} has been created successfully`)
         }
         catch(error){
             console.log(error)
+            setMessage(`The blog could not have been created`)
         }
     }
     return(
