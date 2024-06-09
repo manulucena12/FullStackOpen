@@ -38,6 +38,9 @@ export const Blogs = ({blogs, user, setUser, setBlogs}) => {
                                 Likes: {blog.likes}
                                 <button onClick={() => increaseLikes(blog.id)}>Like</button>
                             </li>
+                            <li>
+                                {blog.user.name}
+                            </li>
                         </ul>
                     </Togglable>
                 </li>

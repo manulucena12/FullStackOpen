@@ -60,7 +60,7 @@ blogRouter.delete('/:id', getToken, getUser, async (req, res) => {
   }
 });
 
-blogRouter.put('/:id', async (req, res) => {
+blogRouter.put('/likes/:id', async (req, res) => {
   const { id } = req.params;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {
