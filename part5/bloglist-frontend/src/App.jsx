@@ -36,6 +36,7 @@ const App = () => {
             user={user}
             setUser={setUser}
             setBlogs={setBlogs}
+            token={token}
           />
           <BlogForm
             token={token}

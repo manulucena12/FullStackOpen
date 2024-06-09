@@ -1,7 +1,8 @@
+import { deleteBlogService } from "../services/deleteBlog"
 import { increaseLikesService } from "../services/increaseLikes"
 import { Togglable } from "./togglable"
 
-export const Blogs = ({blogs, user, setUser, setBlogs}) => {
+export const Blogs = ({blogs, user, setUser, setBlogs, token}) => {
     const logOut = () => {
         setUser(null)
         window.localStorage.removeItem('loggedBlogAppUser')
@@ -19,6 +20,13 @@ export const Blogs = ({blogs, user, setUser, setBlogs}) => {
         setBlogs(blogs.map(blog =>
             blog.id === id ? { ...blog, likes: updatedBlog.likes } : blog
         ))
+    }
+    const deleteBlog = async (id) =>{
+        const blogToEliminate = blogs.find(blog => blog.id === id)
+        if(window.confirm(`Do you want to eliminate the blog ${blogToEliminate.title} by ${blogToEliminate.author}?`)){
+            await deleteBlogService(id, token)
+            setBlogs(blogs.filter(blog => blog.id !== id))
+        }
     }   
     return(
         <div style={blogStyle}>
@@ -43,6 +51,7 @@ export const Blogs = ({blogs, user, setUser, setBlogs}) => {
                             <li>
                                 {blog.user.name}
                             </li>
+                            <button onClick={()=> deleteBlog(blog.id)}>Delete</button>
                         </ul>
                     </Togglable>
                 </li>
