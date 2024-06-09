@@ -3,6 +3,7 @@ import { Login } from './components/userLogin'
 import { getBlogsService } from './services/getBlogs'
 import { Blogs } from './components/userBlogs'
 import { Notification } from './components/notification'
+import { BlogForm } from './components/blogForm'
 
 
 const App = () => {
@@ -29,14 +30,19 @@ const App = () => {
     <>
       {
         user
-        ? <Blogs 
+        ? <>
+          <Blogs 
             blogs={blogs}
             user={user}
             setUser={setUser}
+          />
+          <BlogForm
             token={token}
             setBlogs={setBlogs}
             setMessage={setMessage}
+            blogs={blogs}
           />
+        </>
         : <Login 
             setUser={setUser}
             setToken={setToken}
