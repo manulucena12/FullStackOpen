@@ -1,8 +1,11 @@
 import { useState } from "react"
 import { postBlogService } from "../services/createBlog"
+import { Togglable } from "./togglable"
+import { useRef } from "react"
 export const Blogs = ({blogs, user, setUser, token, setBlogs, setMessage}) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
+    const elementRef = useRef()
     const handleTitle = (event) => {
         setTitle(event.target.value)
     }
@@ -23,6 +26,7 @@ export const Blogs = ({blogs, user, setUser, token, setBlogs, setMessage}) => {
             const blogged = await postBlogService(newBlog, token)
             setBlogs([...blogs, blogged])
             setMessage(`Blog ${blogged.title} by ${blogged.author} has been created successfully`)
+            elementRef.current.handleVisibility()
         }
         catch(error){
             console.log(error)
@@ -34,6 +38,7 @@ export const Blogs = ({blogs, user, setUser, token, setBlogs, setMessage}) => {
             <h1>Welcome @{user.username} </h1>
             <button onClick={logOut}>LogOut</button>
             <h2>Add some new blog!</h2>
+            <Togglable buttonLabel={'Create a new blog'} ref={elementRef}>
             <form onSubmit={handleBlog}>
                 <input type="text" value={title} placeholder="Title" onChange={handleTitle}></input>
                 <p></p>
@@ -41,6 +46,7 @@ export const Blogs = ({blogs, user, setUser, token, setBlogs, setMessage}) => {
                 <p></p>
                 <button>Create Blog</button>
             </form>
+            </Togglable>
             <ul>
             {blogs.map((blog) => (
                 <li key={blog.id}>Title: {blog.title} Author: {blog.author}</li>
