@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { loginService } from "../services/loginPost"
-export const Login = ({setUser}) => {
+export const Login = ({setUser, setToken, token}) => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const handleUsername = (event) => {
@@ -22,6 +22,8 @@ export const Login = ({setUser}) => {
         window.localStorage.setItem(
             'loggedBlogAppUser', JSON.stringify(loggedUser)
         )
+        setToken(`Bearer ${loggedUser.token}`)
+        console.log(token)
     }
     return(
         <>

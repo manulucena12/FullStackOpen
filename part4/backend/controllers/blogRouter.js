@@ -31,7 +31,7 @@ blogRouter.post('/', getToken, getUser, async (request, response) => {
     const user = request.user
     user.blogs = user.blogs.concat(savedBlog._id)
     await user.save()
-    response.status(201).json({Status: 'Blog created succesfully'})
+    response.status(201).json(savedBlog)
     }
   catch(error){
       console.log(error)

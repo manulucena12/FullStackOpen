@@ -7,6 +7,7 @@ import { Blogs } from './components/userBlogs'
 const App = () => {
   const [user, setUser] = useState(null)
   const [blogs, setBlogs] = useState([])
+  const [token, setToken] = useState(null)
   useEffect(() => {
     const renderBlogs = async () => {
       const getBlogs = await getBlogsService()
@@ -17,6 +18,8 @@ const App = () => {
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
+      setToken(`Bearer ${user.token}`)
+      console.log(token)
     }
   }, [])
   
@@ -28,9 +31,13 @@ const App = () => {
             blogs={blogs}
             user={user}
             setUser={setUser}
+            token={token}
+            setBlogs={setBlogs}
           />
         : <Login 
             setUser={setUser}
+            setToken={setToken}
+            token={token}
           />
       }
     </>
