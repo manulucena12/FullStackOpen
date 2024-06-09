@@ -16,13 +16,16 @@ export const BlogForm = ({token, setBlogs, setMessage, blogs}) => {
         event.preventDefault()
         const newBlog = {
             title,
-            author
+            author,
+            likes: 0
         }
         try {
             const blogged = await postBlogService(newBlog, token)
             setBlogs([...blogs, blogged])
             setMessage(`Blog ${blogged.title} by ${blogged.author} has been created successfully`)
             elementRef.current.handleVisibility()
+            setAuthor('')
+            setTitle('')
         }
         catch(error){
             console.log(error)
