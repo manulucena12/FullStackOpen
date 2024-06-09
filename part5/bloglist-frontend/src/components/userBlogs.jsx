@@ -1,6 +1,7 @@
+import { increaseLikesService } from "../services/increaseLikes"
 import { Togglable } from "./togglable"
 
-export const Blogs = ({blogs, user, setUser}) => {
+export const Blogs = ({blogs, user, setUser, setBlogs}) => {
     const logOut = () => {
         setUser(null)
         window.localStorage.removeItem('loggedBlogAppUser')
@@ -12,7 +13,13 @@ export const Blogs = ({blogs, user, setUser}) => {
         border: 'solid',
         borderWidth: 6,
         marginBottom: 7
-      }
+    }
+    const increaseLikes = async (id) => {
+        const updatedBlog = await increaseLikesService(id)
+        setBlogs(blogs.map(blog =>
+            blog.id === id ? { ...blog, likes: updatedBlog.likes } : blog
+        ))
+    }   
     return(
         <div style={blogStyle}>
             <h1>Welcome @{user.username} </h1>
@@ -29,6 +36,7 @@ export const Blogs = ({blogs, user, setUser}) => {
                             </li>
                             <li>
                                 Likes: {blog.likes}
+                                <button onClick={() => increaseLikes(blog.id)}>Like</button>
                             </li>
                         </ul>
                     </Togglable>
