@@ -26,7 +26,9 @@ export const Blogs = ({blogs, user, setUser, setBlogs}) => {
             <button onClick={logOut}>LogOut</button>
             <h2>Add some new blog!</h2>
             <ul>
-            {blogs.map((blog) => (
+            {blogs
+            .sort((a, b) => b.likes - a.likes)
+            .map((blog) => (
                 <li key={blog.id}>
                     Title: {blog.title}
                     <Togglable buttonLabel={'Show details'}>
