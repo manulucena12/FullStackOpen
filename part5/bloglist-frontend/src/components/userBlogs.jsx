@@ -2,7 +2,7 @@ import { deleteBlogService } from "../services/deleteBlog"
 import { increaseLikesService } from "../services/increaseLikes"
 import { Togglable } from "./togglable"
 
-export const Blogs = ({blogs, user, setUser, setBlogs, token}) => {
+export const Blogs = ({blogs, user, setUser, setBlogs, token, mockHandler}) => {
     const logOut = () => {
         setUser(null)
         window.localStorage.removeItem('loggedBlogAppUser')
@@ -46,7 +46,7 @@ export const Blogs = ({blogs, user, setUser, setBlogs, token}) => {
                             </li>
                             <li>
                                 Likes: {blog.likes}
-                                <button onClick={() => increaseLikes(blog.id)}>Like</button>
+                                <button onClick={() => {increaseLikes(blog.id), mockHandler()}}>Like</button>
                             </li>
                             <li>
                                 {blog.user.name}
