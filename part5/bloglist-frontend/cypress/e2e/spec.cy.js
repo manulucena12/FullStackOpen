@@ -23,5 +23,18 @@ describe('Testing Blogs E2E', () => {
     cy.get('button').contains('Login').click()
     cy.wait('@loginRequest').its('response.statusCode').should('eq', 400)
   })
+  describe('When logged in', function() {
+    beforeEach(function() {
+      cy.get('[placeholder = "Username"]').type('manulucena12')
+      cy.get('[placeholder = "Password"]').type('mypassword')
+      cy.get('button').contains('Login').click()
+    })
 
+    it('A blog can be created', function() {
+      cy.contains('Create a new blog').click()
+      cy.get('[placeholder = "Title"]').type('FullStackOpen')
+      cy.get('[placeholder = "Author"]').type('Helsinki')
+      cy.get('button').contains('Create Blog').click()
+    })
+  })
 })
