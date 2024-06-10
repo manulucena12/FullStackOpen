@@ -44,5 +44,13 @@ describe('Testing Blogs E2E', () => {
       cy.get('button').contains('Show details').click()
       cy.get('button').contains('Like').click()
     })
+    it('A blog can be deleted', ()=>{
+      cy.contains('Create a new blog').click()
+      cy.get('[placeholder = "Title"]').type('FullStackOpen')
+      cy.get('[placeholder = "Author"]').type('Helsinki')
+      cy.get('button').contains('Create Blog').click()
+      cy.get('button').contains('Show details').click()
+      cy.get('button').contains('Delete').click()
+    })
   })
 })
