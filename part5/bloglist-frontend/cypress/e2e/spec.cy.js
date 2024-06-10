@@ -52,5 +52,24 @@ describe('Testing Blogs E2E', () => {
       cy.get('button').contains('Show details').click()
       cy.get('button').contains('Delete').click()
     })
+    it.only('A blog only can be delete by the person who created it', ()=>{
+      cy.intercept('DELETE', '**/api/blogs/*').as('deleteBlog')
+      cy.contains('Create a new blog').click()
+      cy.get('[placeholder = "Title"]').type('FullStackOpen')
+      cy.get('[placeholder = "Author"]').type('Helsinki')
+      cy.get('button').contains('Create Blog').click()
+      const testingUser2 = {
+        username: 'manulucena127',
+        password: 'mypassword2'
+      }
+      cy.request('POST', 'http://localhost:3002/api/users', testingUser2)
+      cy.get('button').contains('LogOut').click()
+      cy.get('[placeholder = "Username"]').type('manulucena127')
+      cy.get('[placeholder = "Password"]').type('mypassword2')
+      cy.get('button').contains('Login').click()
+      cy.get('button').contains('Show details').click()
+      cy.get('button').contains('Delete').click()
+      cy.wait('@deleteBlog').its('response.statusCode').should('eq', 401)
+    })
   })
 })
