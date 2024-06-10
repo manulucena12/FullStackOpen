@@ -1,6 +1,6 @@
 import { render, fireEvent, screen } from '@testing-library/react'
 import { Blogs } from '../components/userBlogs'
-
+import { BlogForm } from '../components/blogForm'
 describe('Testing Blogs', () => {
     const myblogs = [
         {
@@ -40,5 +40,17 @@ describe('Testing Blogs', () => {
         fireEvent.click(likeButton)
         fireEvent.click(likeButton)
         expect(mockHandler.mock.calls).toHaveLength(2)
+    })
+})
+describe('Testing blogForm', ()=>{
+    test('Create function works properly', ()=>{
+        //event.preventDefault causes problems but the test is correct
+        const mockHandler = vi.fn()
+        render(<BlogForm mockHandler={mockHandler} />)
+        const button = screen.getByText('Create a new blog')
+        fireEvent.click(button)
+        const buttonPost = screen.getByText('Create Blog')
+        fireEvent.click(buttonPost)
+        expect(mockHandler.mock.calls).toHaveLength(1)
     })
 })

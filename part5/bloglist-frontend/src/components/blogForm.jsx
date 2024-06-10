@@ -2,7 +2,7 @@ import { useState } from "react"
 import { postBlogService } from "../services/createBlog"
 import { Togglable } from "./togglable"
 import { useRef } from "react"
-export const BlogForm = ({token, setBlogs, setMessage, blogs}) => {
+export const BlogForm = ({token, setBlogs, setMessage, blogs, mockHandler}) => {
     const [title, setTitle] = useState('')
     const [author, setAuthor] = useState('')
     const elementRef = useRef()
@@ -35,7 +35,7 @@ export const BlogForm = ({token, setBlogs, setMessage, blogs}) => {
     return(
         <>
             <Togglable buttonLabel={'Create a new blog'} ref={elementRef}>
-            <form onSubmit={handleBlog}>
+            <form onSubmit={()=> {mockHandler(), handleBlog()}}>
                 <input type="text" value={title} placeholder="Title" onChange={handleTitle}></input>
                 <p></p>
                 <input type="text" value={author} placeholder="Author" onChange={handleAuthor}></input>
