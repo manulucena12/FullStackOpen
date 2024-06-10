@@ -46,7 +46,7 @@ export const Blogs = ({blogs, user, setUser, setBlogs, token, mockHandler}) => {
                             </li>
                             <li>
                                 Likes: {blog.likes}
-                                <button onClick={() => {increaseLikes(blog.id), mockHandler()}}>Like</button>
+                                <button onClick={()=> increaseLikes(blog.id) }>Like</button>
                             </li>
                             <li>
                                 {blog.user.name}
