@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useImperativeHandle } from "react"
 import { forwardRef } from "react"
 import PropTypes from 'prop-types'
-export const Togglable = forwardRef(({children, buttonLabel}, ref) => {
+export const Togglable = forwardRef(({children, buttonLabel, datatestId}, ref) => {
     const [visibility, setVisibility] = useState(false)
     const showChildren = {display: visibility ? '' : 'none'}
     const hideChildren = {display: visibility ? 'none' : ''}
@@ -19,7 +19,7 @@ export const Togglable = forwardRef(({children, buttonLabel}, ref) => {
                 <button onClick={handleVisibility}>Close</button>
             </div>
             <div style={hideChildren}>
-                <button onClick={handleVisibility}>{buttonLabel}</button>
+                <button onClick={handleVisibility} datatestId={datatestId} >{buttonLabel}</button>
             </div>
         </>
     )

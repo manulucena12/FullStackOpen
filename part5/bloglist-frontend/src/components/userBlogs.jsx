@@ -36,17 +36,17 @@ export const Blogs = ({blogs, user, setUser, setBlogs, token, mockHandler}) => {
             <ul>
             {blogs
             .sort((a, b) => b.likes - a.likes)
-            .map((blog) => (
-                <li key={blog.id}>
+            .map((blog, index) => (
+                <li key={blog.id} data-cy={`blog-${index}`}>
                     Title: {blog.title}
-                    <Togglable buttonLabel={'Show details'}>
+                    <Togglable buttonLabel={'Show details'} datatestId={`toggle-button-${index}`}>
                         <ul>
                             <li>
                                 Author: {blog.author}
                             </li>
                             <li>
                                 Likes: {blog.likes}
-                                <button onClick={()=> increaseLikes(blog.id) }>Like</button>
+                                <button onClick={()=> increaseLikes(blog.id) } dataidlikebutton = {`like-button-${index}`}  >Like</button>
                             </li>
                             <li>
                                 {blog.user.name}
