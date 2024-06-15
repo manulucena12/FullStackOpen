@@ -1,3 +1,5 @@
+//Exercise 6.11 was done with 6.10!
+
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 
 const getId = () => (100000 * Math.random()).toFixed(0)
