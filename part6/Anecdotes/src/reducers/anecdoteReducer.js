@@ -41,6 +41,8 @@ const anecdoteReducer = (state = anecdotesAtStart, action) => {
     return state.map(quote =>
       quote.id === action.payload.id ? {...quote, votes: quote.votes +1} : quote
     )
+    case 'CREATE_QUOTE':
+      return [... state, action.payload]
   default: return  anecdotesAtStart
   }
 }

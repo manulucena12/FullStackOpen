@@ -1,15 +1,19 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { voteQuoteAction } from './actions/vote'
+import { createQuoteAction } from './actions/createQuote'
 
 const App = () => {
   const anecdotes = useSelector(state => state.anecdotes)
   const dispatch = useDispatch()
-
-
-
+  const handleQuote = (event) => {
+    event.preventDefault()
+    const newAnecdote = event.target.content.value
+    event.target.content.value = ''
+    dispatch(createQuoteAction(newAnecdote))
+  }
   return (
     <div>
-      <h2>Anecdotes</h2>
+      <h2>Anecdotes by @manulucena12 </h2>
       {anecdotes.map(anecdote =>
         <div key={anecdote.id}>
           <div>
@@ -21,10 +25,10 @@ const App = () => {
           </div>
         </div>
       )}
-      <h2>create new</h2>
-      <form>
-        <div><input /></div>
-        <button>create</button>
+      <h2>Create new anecdote!</h2>
+      <form onSubmit={handleQuote} >
+        <input type='text' name = 'content' placeholder = 'Enter content for the quote' ></input>
+        <button>Submit</button>
       </form>
     </div>
   )
