@@ -5,7 +5,6 @@ export const AnecdoteListComponent = () => {
     const dispatch = useDispatch()
     return (
         <>
-            <h2>Anecdotes by @manulucena12 </h2>
             {anecdotes
             .sort((a, b) => b.votes - a.votes)
             .map(anecdote =>
