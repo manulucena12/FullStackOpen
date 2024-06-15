@@ -1,4 +1,7 @@
+import { configureStore, createSlice } from '@reduxjs/toolkit'
+
 const getId = () => (100000 * Math.random()).toFixed(0)
+
 const anecdotesAtStart = [
   {
     content: "If it hurts, do it more often",
@@ -33,18 +36,38 @@ const anecdotesAtStart = [
 ]
 
 
-const anecdoteReducer = (state = anecdotesAtStart, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
-  switch(action.type){
-    case 'VOTE_QUOTE':
-    return state.map(quote =>
-      quote.id === action.payload.id ? {...quote, votes: quote.votes +1} : quote
-    )
-    case 'CREATE_QUOTE':
-      return [... state, action.payload]
-  default: return  anecdotesAtStart
+const anecdoteSlice = createSlice({
+  name: 'anecdotes',
+  initialState: anecdotesAtStart,
+  reducers: {
+    voteQuote(state, action) {
+      return state.map(quote =>
+        quote.id === action.payload.id ? { ...quote, votes: quote.votes + 1 } : quote
+      )
+    },
+    createQuote(state, action) {
+      return [...state, action.payload]
+    }
   }
-}
+})
 
-export default anecdoteReducer
+const filterSlice = createSlice({
+  name: 'filter',
+  initialState: '',
+  reducers: {
+    setFilter(state, action) {
+      return action.payload.name
+    }
+  }
+})
+
+const store = configureStore({
+  reducer: {
+    anecdotes: anecdoteSlice.reducer,
+    filter: filterSlice.reducer
+  }
+})
+
+export const { voteQuote, createQuote } = anecdoteSlice.actions
+export const { setFilter } = filterSlice.actions
+export default store

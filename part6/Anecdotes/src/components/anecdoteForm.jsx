@@ -1,12 +1,18 @@
 import { useDispatch } from 'react-redux'
-import { createQuoteAction } from '../actions/createQuote'
+import { createQuote } from '../../store'
 export const AnecdoteFormComponent = () => {
+    const getId = () => (100000 * Math.random()).toFixed(0)
     const dispatch = useDispatch()
     const handleQuote = (event) => {
         event.preventDefault()
         const newAnecdote = event.target.content.value
         event.target.content.value = ''
-        dispatch(createQuoteAction(newAnecdote))
+        const newQuote = {
+            content: newAnecdote,
+            votes: 0,
+            id: getId()
+        }
+        dispatch(createQuote(newQuote))
       }
     return (
         <>

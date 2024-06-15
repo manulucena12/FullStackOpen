@@ -1,10 +1,10 @@
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
-import { setFilterAction } from '../actions/searchQuote'
+import { setFilter } from '../../store'
 export const AnecdoteFilterComponent = () => {
     const dispatch = useDispatch()
     const handleChange = (event) => {
-    dispatch(setFilterAction(event.target.value))
+    dispatch(setFilter({name: event.target.value }))
     }
 
   const anecdotes = useSelector(state => state.anecdotes)
