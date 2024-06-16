@@ -1,14 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
-import {setNotification, voteQuote } from '../../store'
+import {setNotification} from '../../store'
+import { putAnecdoteAction } from '../actions/changeQuote'
 
 export const AnecdoteListComponent = () => {
 
   const anecdotes = useSelector(state => state.anecdotes)
   const dispatch = useDispatch()
 
-  const handleVote = (id) => {
-    dispatch(voteQuote(id))
-  }
+  
 
   return (
     <>
@@ -22,7 +21,10 @@ export const AnecdoteListComponent = () => {
             </div>
             <div>
               has {anecdote.votes}
-              <button onClick={() => {handleVote({id: anecdote.id}); dispatch(setNotification({state: `You vote for ${anecdote.content} `})) }}>vote</button>
+              <button onClick={() => {
+                dispatch(putAnecdoteAction(anecdote.content, anecdote.votes, anecdote.id)); 
+                dispatch(setNotification({state: `You vote for ${anecdote.content} `})) }
+                }>vote</button>
             </div>
           </div>
         )}
