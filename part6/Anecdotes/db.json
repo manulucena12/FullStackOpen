@@ -32,8 +32,23 @@
     },
     {
       "content": "Hello",
-      "votes": 1,
+      "votes": 2,
       "id": "bd6b"
+    },
+    {
+      "content": "Welcome",
+      "votes": 1,
+      "id": "1616"
+    },
+    {
+      "content": "Hello",
+      "votes": 1,
+      "id": "1073"
+    },
+    {
+      "id": "db94",
+      "content": "New Anecdote",
+      "votes": 0
     }
   ]
 }

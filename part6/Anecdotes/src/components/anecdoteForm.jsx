@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { createQuote, setNotification } from '../../store'
+import {setNotification } from '../../store'
 import { postAnecdoteAction } from '../actions/sendQuote'
 export const AnecdoteFormComponent = () => {
     const getId = () => (100000 * Math.random()).toFixed(0)
