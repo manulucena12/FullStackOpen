@@ -5,6 +5,8 @@ import { NotificationComponent } from './components/Notification'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { getAnecdotesAction } from './actions/fetchQuotes'
+import { QueryAnecdotesComponent } from './components/anecdoteQuery'
+import { QueryClientProvider, QueryClient } from 'react-query'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -12,13 +14,23 @@ const App = () => {
     dispatch(getAnecdotesAction())
   }, [])
   
+  const query = true
+  const queryClient = new QueryClient()
+
   return (
     <>
-      <h2>Anecdotes by @manulucena12 </h2>
-      <NotificationComponent/>
-      <AnecdoteFilterComponent/>
-      <AnecdoteListComponent/>
-      <AnecdoteFormComponent/>
+      {query
+        ? <QueryClientProvider client={queryClient}>
+          <QueryAnecdotesComponent/>
+          </QueryClientProvider>
+        : <>
+          <h2>Anecdotes by @manulucena12 </h2>
+          <NotificationComponent/>
+          <AnecdoteFilterComponent/>
+          <AnecdoteListComponent/>
+          <AnecdoteFormComponent/>
+        </>
+      }
     </>
   )
   
