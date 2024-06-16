@@ -13,7 +13,7 @@ export const AnecdoteFormComponent = () => {
             id: getId()
         }
         dispatch(createQuote(newQuote))
-        dispatch(setNotification({state: 'Created'}))
+        dispatch(setNotification({state: `Your new anecdote: "${newAnecdote}" has been created! `}))
       }
     return (
         <>
