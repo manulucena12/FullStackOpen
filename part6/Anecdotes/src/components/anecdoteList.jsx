@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { setNotification, voteQuote } from '../../store'
+import {setNotification, voteQuote } from '../../store'
 
 export const AnecdoteListComponent = () => {
+
   const anecdotes = useSelector(state => state.anecdotes)
   const dispatch = useDispatch()
 
