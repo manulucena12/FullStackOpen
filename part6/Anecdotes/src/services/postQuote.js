@@ -1,3 +1,4 @@
+// Exercise 6.17 already done!
 import axios from "axios"
 export const postAnecdoteService = async (content) => {
     const baseUrl = 'http://localhost:3002/anecdotes'
