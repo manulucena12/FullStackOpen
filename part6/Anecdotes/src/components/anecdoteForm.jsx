@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux'
-import { createQuote } from '../../store'
+import { createQuote, setNotification } from '../../store'
 export const AnecdoteFormComponent = () => {
     const getId = () => (100000 * Math.random()).toFixed(0)
     const dispatch = useDispatch()
@@ -13,6 +13,7 @@ export const AnecdoteFormComponent = () => {
             id: getId()
         }
         dispatch(createQuote(newQuote))
+        dispatch(setNotification({state: 'Created'}))
       }
     return (
         <>

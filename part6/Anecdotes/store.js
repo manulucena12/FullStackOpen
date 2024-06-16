@@ -63,13 +63,25 @@ const filterSlice = createSlice({
   }
 })
 
+const notificationSlice = createSlice({
+  name: 'notification',
+  initialState: null,
+  reducers: {
+    setNotification(state,action){
+      return action.payload.state
+    }
+  }
+})
+
 const store = configureStore({
   reducer: {
     anecdotes: anecdoteSlice.reducer,
-    filter: filterSlice.reducer
+    filter: filterSlice.reducer,
+    notification: notificationSlice.reducer
   }
 })
 
 export const { voteQuote, createQuote } = anecdoteSlice.actions
 export const { setFilter } = filterSlice.actions
+export const { setNotification } = notificationSlice.actions
 export default store
