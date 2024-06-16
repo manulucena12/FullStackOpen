@@ -1,5 +1,6 @@
 import { useDispatch } from 'react-redux'
 import { createQuote, setNotification } from '../../store'
+import { postAnecdoteAction } from '../actions/sendQuote'
 export const AnecdoteFormComponent = () => {
     const getId = () => (100000 * Math.random()).toFixed(0)
     const dispatch = useDispatch()
@@ -7,12 +8,7 @@ export const AnecdoteFormComponent = () => {
         event.preventDefault()
         const newAnecdote = event.target.content.value
         event.target.content.value = ''
-        const newQuote = {
-            content: newAnecdote,
-            votes: 0,
-            id: getId()
-        }
-        dispatch(createQuote(newQuote))
+        dispatch(postAnecdoteAction(newAnecdote))
         dispatch(setNotification({state: `Your new anecdote: "${newAnecdote}" has been created! `}))
       }
     return (
