@@ -1,10 +1,42 @@
-import { useQuery } from "react-query"
+import { useState } from "react"
+import { useQuery, useMutation, useQueryClient } from "react-query"
 
 export const QueryAnecdotesComponent = () =>{
+
+    const [newAnecdote, setNewAnecdote] = useState('')
+
+    const queryClient = useQueryClient()
 
     const getAnecdotes = async () => {
         const res = await fetch('http://localhost:3002/anecdotes')
         return res.json()
+    }
+
+    const addAnecdote = async (anecdote) => {
+        const res = await fetch('http://localhost:3002/anecdotes', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(anecdote)
+        })
+        return res.json()
+    }
+
+    const mutation = useMutation(addAnecdote, {
+        onSuccess: () => {
+          queryClient.invalidateQueries('anecdotes')
+        }
+    })
+    
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        if (newAnecdote.length < 5) {
+          alert('The anecdote content must be 5 characters long.')
+          return
+        }
+        mutation.mutate({ content: newAnecdote, votes: 0 })
+        setNewAnecdote('')
     }
 
     const { data, status} = useQuery('anecdotes', getAnecdotes )
@@ -23,6 +55,11 @@ export const QueryAnecdotesComponent = () =>{
                     })
                 }
             </ul>
+            <h3>Create a new anecdote</h3>
+            <form onSubmit={handleSubmit}>
+            <input type="text" value={newAnecdote} onChange={() => setNewAnecdote(event.target.value)} placeholder="Add a new anecdote"/>
+            <button>Create anecdote</button>
+        </form>
         </>
     )
 }
