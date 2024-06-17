@@ -7,6 +7,7 @@ import { useDispatch } from 'react-redux'
 import { getAnecdotesAction } from './actions/fetchQuotes'
 import { QueryAnecdotesComponent } from './components/anecdoteQuery'
 import { QueryClientProvider, QueryClient } from 'react-query'
+import { NotificationProvider } from './context/notiContext'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -20,8 +21,11 @@ const App = () => {
   return (
     <>
       {query
-        ? <QueryClientProvider client={queryClient}>
-          <QueryAnecdotesComponent/>
+        ? <QueryClientProvider client={queryClient}> 
+            <NotificationProvider>
+              <NotificationComponent/>
+              <QueryAnecdotesComponent/>
+            </NotificationProvider>
           </QueryClientProvider>
         : <>
           <h2>Anecdotes by @manulucena12 </h2>

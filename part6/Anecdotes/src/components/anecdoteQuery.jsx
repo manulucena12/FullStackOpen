@@ -1,11 +1,14 @@
 import { useState } from "react"
 import { useQuery, useMutation, useQueryClient } from "react-query"
+import { useNotification } from '../context/notiContext'
 
 export const QueryAnecdotesComponent = () =>{
 
     const [newAnecdote, setNewAnecdote] = useState('')
 
     const queryClient = useQueryClient()
+
+    const { setNotification } = useNotification()
 
     const getAnecdotes = async () => {
         const res = await fetch('http://localhost:3002/anecdotes')
@@ -37,6 +40,7 @@ export const QueryAnecdotesComponent = () =>{
         }
         mutation.mutate({ content: newAnecdote, votes: 0 })
         setNewAnecdote('')
+        setNotification('A new anecdote was added properly')
     }
 
     const voteAnecdote = async (anecdote) => {
@@ -45,14 +49,15 @@ export const QueryAnecdotesComponent = () =>{
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ votes: anecdote.votes + 1 }),
-        });
+          body: JSON.stringify({ votes: anecdote.votes + 1 })
+        })
         return res.json()
     }
 
     const voteMutation = useMutation(voteAnecdote, {
         onSuccess: () => {
-          queryClient.invalidateQueries('anecdotes');
+          queryClient.invalidateQueries('anecdotes')
+          setNotification('Voted')
         }
     })
 
