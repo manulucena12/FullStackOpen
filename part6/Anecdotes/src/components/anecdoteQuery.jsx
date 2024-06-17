@@ -39,6 +39,27 @@ export const QueryAnecdotesComponent = () =>{
         setNewAnecdote('')
     }
 
+    const voteAnecdote = async (anecdote) => {
+        const res = await fetch(`http://localhost:3002/anecdotes/${anecdote.id}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ votes: anecdote.votes + 1 }),
+        });
+        return res.json()
+    }
+
+    const voteMutation = useMutation(voteAnecdote, {
+        onSuccess: () => {
+          queryClient.invalidateQueries('anecdotes');
+        }
+    })
+
+    const handleVote = (anecdote) => {
+        voteMutation.mutate(anecdote);
+    }
+
     const { data, status} = useQuery('anecdotes', getAnecdotes )
     if(status === 'loading'){
         return <p>Getting anecdotes...</p>
@@ -51,7 +72,10 @@ export const QueryAnecdotesComponent = () =>{
             <ul>
                 {data
                     .map(anecdote => {
-                        return <li key={anecdote.id} > {anecdote.content} has {anecdote.votes} votes </li>
+                        return <li 
+                            key={anecdote.id} > {anecdote.content} has {anecdote.votes} votes 
+                            <button onClick={() => handleVote(anecdote)}>Vote</button>
+                        </li>
                     })
                 }
             </ul>
