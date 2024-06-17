@@ -32,7 +32,7 @@
     },
     {
       "content": "Hello",
-      "votes": 2,
+      "votes": 3,
       "id": "bd6b"
     },
     {
@@ -58,7 +58,7 @@
     {
       "id": "c267",
       "content": "Prueba",
-      "votes": 0
+      "votes": 2
     }
   ]
 }

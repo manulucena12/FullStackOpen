@@ -15,7 +15,7 @@ const App = () => {
     dispatch(getAnecdotesAction())
   }, [])
   
-  const query = true
+  const query = false
   const queryClient = new QueryClient()
 
   return (

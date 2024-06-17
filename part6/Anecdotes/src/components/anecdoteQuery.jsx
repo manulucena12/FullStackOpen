@@ -35,7 +35,7 @@ export const QueryAnecdotesComponent = () =>{
     const handleSubmit = (event) => {
         event.preventDefault();
         if (newAnecdote.length < 5) {
-          alert('The anecdote content must be 5 characters long.')
+          setNotification('The anecdote content must be 5 characters long.')
           return
         }
         mutation.mutate({ content: newAnecdote, votes: 0 })
