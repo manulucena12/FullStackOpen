@@ -48,6 +48,7 @@ const Footer = () => (
 )
 
 const CreateNew = ({addNew, setNotification}) => {
+  //Exercise 7.6 no needed to be done
   const {content,author,info,getContent,getAuthor,getInfo,resetAll} = useField()
   const navigate = useNavigate()
 
