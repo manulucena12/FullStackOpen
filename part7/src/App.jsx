@@ -17,8 +17,8 @@ const AnecdoteList = ({ anecdotes }) => (
   <div>
     <h2>Anecdotes</h2>
     <ul>
-      {anecdotes.map(anecdote => <li key={anecdote.id} >{anecdote.content}
-        <Link to={`/${anecdote.id}`} >See datails</Link>
+      {anecdotes.map(anecdote => <li key={anecdote.id} >
+        <Link to={`/${anecdote.id}`} >{anecdote.content}</Link>
       </li>)}
     </ul>
   </div>
@@ -87,10 +87,12 @@ const CreateNew = (props) => {
 
 const NotePage = ({anecdotes}) => {
   const {noteId} = useParams()
-  const note = anecdotes.find(note=> note.id === noteId)
+  const note = anecdotes.find(note=> note.id === Number(noteId))
   return (
     <div>
-      {note.content}
+      <h1>Details for the anecdote {note.content} by {note.author} </h1>
+      <h2>Votes: {note.votes}</h2>
+      <h2><Link to={note.info}>More informationn</Link> </h2>
     </div>
   )
 }
@@ -137,8 +139,8 @@ const App = () => {
   return (
     <div>
       <BrowserRouter>
-      <Link to={'/'}>Home</Link>
-        <Link to={'/create'}>Create Note</Link>
+      <Link to={'/'} style={{ marginRight: '10px' }} >Home</Link>
+        <Link to={'/create'}style={{ marginRight: '10px' }}>Create Note</Link>
         <Link to={'/about'}>About</Link>
         <Routes>
           <Route path = '/' element={<AnecdoteList anecdotes={anecdotes}/>} />
