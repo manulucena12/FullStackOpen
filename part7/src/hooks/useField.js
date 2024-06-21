@@ -8,6 +8,7 @@ export const useField = () => {
     const getContent = (e) => setContent(e.target.value)
     const getAuthor = (e) => setAuthor(e.target.value)
     const getInfo = (e) => setInfo(e.target.value)
+    const resetAll = (e) => {e.preventDefault();setContent('');setAuthor('');setInfo('')}
 
     return {
         content,
@@ -15,6 +16,7 @@ export const useField = () => {
         author,
         getAuthor,
         info,
-        getInfo
+        getInfo,
+        resetAll
     }
 }

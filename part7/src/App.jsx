@@ -48,7 +48,7 @@ const Footer = () => (
 )
 
 const CreateNew = ({addNew, setNotification}) => {
-  const {content,author,info,getContent,getAuthor,getInfo} = useField()
+  const {content,author,info,getContent,getAuthor,getInfo,resetAll} = useField()
   const navigate = useNavigate()
 
   const handleSubmit = (e) => {
@@ -66,7 +66,7 @@ const CreateNew = ({addNew, setNotification}) => {
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit}>
+      <form>
         <div>
           content
           <input name='content' value={content} onChange={getContent} />
@@ -79,7 +79,8 @@ const CreateNew = ({addNew, setNotification}) => {
           url for more info
           <input name='info' value={info} onChange={getInfo} />
         </div>
-        <button>create</button>
+        <button onClick={handleSubmit}>create</button>
+        <button onClick={resetAll}>Reset</button>
       </form>
     </div>
   )
