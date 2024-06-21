@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link,BrowserRouter,Route,Routes, useParams } from 'react-router-dom'
+import { Link,BrowserRouter,Route,Routes, useParams, useNavigate,Navigate } from 'react-router-dom'
 const Menu = () => {
   const padding = {
     paddingRight: 5
@@ -46,20 +46,22 @@ const Footer = () => (
   </div>
 )
 
-const CreateNew = (props) => {
+const CreateNew = ({addNew, setNotification}) => {
   const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
   const [info, setInfo] = useState('')
-
+  const navigate = useNavigate()
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    props.addNew({
+    addNew({
       content,
       author,
       info,
       votes: 0
-    })
+    });
+    setNotification('Note added')
+    navigate('/') 
   }
 
   return (
@@ -97,7 +99,21 @@ const NotePage = ({anecdotes}) => {
   )
 }
 
+const Notification = ({notification, setNotification}) => {
+  setTimeout(() => {
+    setNotification(null)
+  }, 5000);
+  return(
+    <div>
+      {notification
+        ? notification
+        : null
+      }
+    </div>
+  )
+}
 const App = () => {
+  const [notification, setNotification] = useState(null)
   const [anecdotes, setAnecdotes] = useState([
     {
       content: 'If it hurts, do it more often',
@@ -114,8 +130,6 @@ const App = () => {
       id: 2
     }
   ])
-
-  const [notification, setNotification] = useState('')
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
@@ -144,10 +158,11 @@ const App = () => {
         <Link to={'/about'}>About</Link>
         <Routes>
           <Route path = '/' element={<AnecdoteList anecdotes={anecdotes}/>} />
-          <Route path = '/create' element={<CreateNew/>} />
+          <Route path = '/create' element={<CreateNew addNew={addNew} setNotification={setNotification}/>} />
           <Route path = '/about' element={<About/>} />
           <Route path = '/:noteId' element={<NotePage anecdotes={anecdotes}/>} />
         </Routes>
+      <Notification notification={notification} setNotification={setNotification}/>
       </BrowserRouter>
       <footer>
         <Footer/>
