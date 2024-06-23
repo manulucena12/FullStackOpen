@@ -1,4 +1,5 @@
 import { setNotification } from "../../redux/Slices/notiSlice"
+import { setToken } from "../../redux/Slices/tokenSlice"
 import { setUser } from "../../redux/Slices/userSlice"
 import { loginService } from "../Services/loginService"
 import { useDispatch } from 'react-redux'
@@ -19,9 +20,10 @@ export const LoginPageComponent = () => {
         try{
             const user = await loginService(userToLog)
             localStorage.setItem("user", JSON.stringify(user))
-            dispatch(setNotification({name: 'Logged successfully!'}))
             dispatch(setUser(user))
+            dispatch(setToken({name: `Bearer ${user.token}`}))
             navigate('/home')
+            dispatch(setNotification({name: 'Logged successfully!'}))
         }
         catch{
             dispatch(setNotification({name: 'Error: Username and/or password is wrong'}))

@@ -8,7 +8,7 @@ export const HomePageComponent = () => {
         <div>
             <h2>Definitive Bloglist App by @manulucena12</h2>
             <h3>Click some link to explore the features!</h3>
-            <button onClick={() => {dispatch(setUser(null)); navigate('/')} } >Log out</button>
+            <button onClick={() => {dispatch(setUser(null)); navigate('/'); window.localStorage.removeItem('user')} } >Log out</button>
         </div>
     )
 }
