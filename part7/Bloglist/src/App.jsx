@@ -23,8 +23,13 @@ export const App = () => {
     return (
         <div>
             <BrowserRouter>
-                <Link to={'/home'} style={{marginRight: 5}} >Home</Link>
-                <Link to={'/blogs'} style={{marginRight: 5}} >Blogs</Link>
+                {user
+                    ?   <>
+                            <Link to={'/home'} style={{marginRight: 5}} >Home</Link>
+                            <Link to={'/blogs'} style={{marginRight: 5}} >Blogs</Link>
+                        </>
+                    :   null
+                }
                 <Routes>
                     <Route path="/home" element={<HomePageComponent/>}/>
                     <Route path="/blogs" element={<BlogPageComponent/>} />

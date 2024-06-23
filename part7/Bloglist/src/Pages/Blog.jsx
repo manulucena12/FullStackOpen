@@ -2,6 +2,8 @@ import { useState } from "react"
 import { setNotification } from "../../redux/Slices/notiSlice"
 import { useDispatch, useSelector } from 'react-redux'
 import { createBlogAction } from "../../redux/Actions/postBlog"
+import { likeBlogAction } from "../../redux/Actions/likeBlog"
+import { deleteBlogAction } from "../../redux/Actions/delBlog"
 export const BlogPageComponent = () => {
     const [show,setShow] = useState(null)
     const label = show ? 'Cancel' : 'Create a new blog'
@@ -37,7 +39,11 @@ export const BlogPageComponent = () => {
                     blogs
                     .map(blog=>{
                         return (
-                            <li key={blog.id}>{blog.title} by @{blog.username} has {blog.likes} likes </li>
+                            <li key={blog.id}>
+                                {blog.title} by @{blog.username} has {blog.likes} likes 
+                                <button style={{marginLeft: 8}} onClick={() => dispatch(likeBlogAction(blog.id)) } >Like</button>
+                                <button style={{marginLeft: 8}} onClick={() => dispatch(deleteBlogAction(blog.id,token)) } >Delete</button>
+                            </li>
                         )
                     })
                 }

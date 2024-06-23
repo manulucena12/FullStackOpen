@@ -9,8 +9,14 @@ export const blogSlice = createSlice({
         },
         addBlog(state,action) {
             state.push(action.payload)
-        } 
+        },
+        likeBlog(state,action) {
+            return state.map(blog => blog.id === action.payload.id ? {...blog, likes: blog.likes +1} : blog )
+        },
+        deleteBlog(state,action) {
+            return state.filter(blog => blog.id !== action.payload.id )
+        }
     }
 })
 
-export const {setBlogs, addBlog} = blogSlice.actions
+export const {setBlogs, addBlog, likeBlog, deleteBlog} = blogSlice.actions
