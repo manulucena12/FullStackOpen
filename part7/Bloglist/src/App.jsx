@@ -8,9 +8,12 @@ import { useDispatch,useSelector } from 'react-redux'
 import { setUser } from "../redux/Slices/userSlice";
 import { setToken } from "../redux/Slices/tokenSlice";
 import { getBlogsAction } from "../redux/Actions/getBlog";
+import { RegisterPageComponent } from "./Pages/Register";
+import { getUserAction } from "../redux/Actions/getUsers";
 export const App = () => {
     const dispatch = useDispatch()
     useEffect(() => {
+        dispatch(getUserAction())
         dispatch(getBlogsAction())
         const user = window.localStorage.getItem('user')
         if (user) {
@@ -34,6 +37,7 @@ export const App = () => {
                     <Route path="/home" element={<HomePageComponent/>}/>
                     <Route path="/blogs" element={<BlogPageComponent/>} />
                     <Route path="/" element={user ? <HomePageComponent/> : <LoginPageComponent/> } />
+                    <Route path="/register" element={<RegisterPageComponent/>}/>
                 </Routes> 
             </BrowserRouter>
             <NotificationComponent/>

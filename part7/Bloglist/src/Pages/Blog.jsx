@@ -42,7 +42,17 @@ export const BlogPageComponent = () => {
                             <li key={blog.id}>
                                 {blog.title} by @{blog.username} has {blog.likes} likes 
                                 <button style={{marginLeft: 8}} onClick={() => dispatch(likeBlogAction(blog.id)) } >Like</button>
-                                <button style={{marginLeft: 8}} onClick={() => dispatch(deleteBlogAction(blog.id,token)) } >Delete</button>
+                                <button style={{marginLeft: 8}} onClick={() => 
+                                        {try {
+                                            dispatch(deleteBlogAction(blog.id,token))
+                                            dispatch(setNotification({name: 'Your blog has been deleted!'}))
+                                        }
+                                        catch(error) {
+                                            console.log(error)
+                                            dispatch(setNotification({name: 'You cannot delete a blog that is not yours!'}))
+                                        }
+                                    }
+                                 } >Delete</button>
                             </li>
                         )
                     })

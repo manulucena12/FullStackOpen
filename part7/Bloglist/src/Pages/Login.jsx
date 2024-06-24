@@ -4,6 +4,7 @@ import { setUser } from "../../redux/Slices/userSlice"
 import { loginService } from "../Services/loginService"
 import { useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom";
 export const LoginPageComponent = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -40,6 +41,7 @@ export const LoginPageComponent = () => {
                 <p></p>
                 <button>Login</button>
             </form>
+            <Link to={'/register'}>Don't you have an accont? Register now! </Link>
         </div>
     )
 }
