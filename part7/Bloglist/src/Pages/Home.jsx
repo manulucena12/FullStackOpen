@@ -17,7 +17,7 @@ export const HomePageComponent = () => {
                 userList
                 .map(user=>{
                     return <li key={user.id}>
-                        <Link to={`/${user.id}`} >{user.username}</Link>, who created {user.blogs.length} blogs 
+                        <Link to={`/user/${user.id}`} >{user.username}</Link>, who created {user.blogs.length} blogs 
                     </li>
                 })
             }

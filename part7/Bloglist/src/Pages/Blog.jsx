@@ -4,10 +4,12 @@ import { useDispatch, useSelector } from 'react-redux'
 import { createBlogAction } from "../../redux/Actions/postBlog"
 import { likeBlogAction } from "../../redux/Actions/likeBlog"
 import { deleteBlogAction } from "../../redux/Actions/delBlog"
+import { useNavigate } from "react-router"
 export const BlogPageComponent = () => {
     const [show,setShow] = useState(null)
     const label = show ? 'Cancel' : 'Create a new blog'
     const dispatch = useDispatch()
+    const navigate = useNavigate()
     const token = useSelector(state=>state.token)
     const blogs = useSelector(state=>state.blogs)
     const user = useSelector(state=>state.user)
@@ -53,6 +55,7 @@ export const BlogPageComponent = () => {
                                         }
                                     }
                                  } >Delete</button>
+                                <button style={{marginLeft: 8}} onClick={() => navigate(`/blog/${blog.id}`) } >View Blog</button>
                             </li>
                         )
                     })
