@@ -10,6 +10,7 @@ import { setToken } from "../redux/Slices/tokenSlice";
 import { getBlogsAction } from "../redux/Actions/getBlog";
 import { RegisterPageComponent } from "./Pages/Register";
 import { getUserAction } from "../redux/Actions/getUsers";
+import { UserPageComponent } from "./Pages/User";
 export const App = () => {
     const dispatch = useDispatch()
     useEffect(() => {
@@ -38,6 +39,7 @@ export const App = () => {
                     <Route path="/blogs" element={<BlogPageComponent/>} />
                     <Route path="/" element={user ? <HomePageComponent/> : <LoginPageComponent/> } />
                     <Route path="/register" element={<RegisterPageComponent/>}/>
+                    <Route path="/:id" element={<UserPageComponent/>}/>
                 </Routes> 
             </BrowserRouter>
             <NotificationComponent/>
