@@ -21,6 +21,7 @@ export const BlogPageComponent = () => {
             title,
             author,
             likes: 0,
+            comments: [],
             username: user.username
         }
         event.target.title.value = ''

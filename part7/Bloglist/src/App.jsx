@@ -30,13 +30,12 @@ export const App = () => {
             <BrowserRouter>
                 {user
                     ?   <>
-                            <Link to={'/home'} style={{marginRight: 5}} >Home</Link>
+                            <Link to={'/'} style={{marginRight: 5}} >Home</Link>
                             <Link to={'/blogs'} style={{marginRight: 5}} >Blogs</Link>
                         </>
                     :   null
                 }
                 <Routes>
-                    <Route path="/home" element={<HomePageComponent/>}/>
                     <Route path="/blogs" element={<BlogPageComponent/>} />
                     <Route path="/" element={user ? <HomePageComponent/> : <LoginPageComponent/> } />
                     <Route path="/register" element={<RegisterPageComponent/>}/>

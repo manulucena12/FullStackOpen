@@ -90,4 +90,34 @@ blogRouter.put('/likes/:id', async (req, res) => {
   }
 });
 
+blogRouter.put('/comments/:id', async (req, res) => {
+  const { id } = req.params;
+
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    return res.status(400).json({ error: 'malformatted id' });
+  }
+
+  try {
+    const getBlog = await Blog.findById(id);
+    if (!getBlog) {
+      return res.status(404).json({ error: 'blog not found' });
+    }
+
+    const updatedBlog = {
+      author: req.body.author || getBlog.author,
+      blogs: req.body.blogs || getBlog.blogs,
+      likes: req.body.likes || getBlog.likes,
+      comments: [...getBlog.comments, req.body.comments],
+      title: req.body.title || getBlog.title,
+      url: req.body.url || getBlog.url
+    };
+
+    const result = await Blog.findByIdAndUpdate(id, updatedBlog, { new: true, runValidators: true });
+    res.json(result);
+
+  } catch (error) {
+    res.status(500).json({ error: 'something went wrong' });
+  }
+})
+
 module.exports = blogRouter;

@@ -23,7 +23,7 @@ export const LoginPageComponent = () => {
             localStorage.setItem("user", JSON.stringify(user))
             dispatch(setUser(user))
             dispatch(setToken({name: `Bearer ${user.token}`}))
-            navigate('/home')
+            navigate('/')
             dispatch(setNotification({name: 'Logged successfully!'}))
         }
         catch{
