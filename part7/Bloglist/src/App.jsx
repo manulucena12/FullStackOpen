@@ -12,6 +12,8 @@ import { RegisterPageComponent } from "./Pages/Register";
 import { getUserAction } from "../redux/Actions/getUsers";
 import { UserPageComponent } from "./Pages/User";
 import { BlogInfoComponent } from "./Pages/Info";
+import { Navbar, Nav } from 'react-bootstrap'
+import '../CSS/App.css'
 export const App = () => {
     const dispatch = useDispatch()
     useEffect(() => {
@@ -28,13 +30,20 @@ export const App = () => {
     return (
         <div>
             <BrowserRouter>
-                {user
-                    ?   <>
-                            <Link to={'/'} style={{marginRight: 5}} >Home</Link>
-                            <Link to={'/blogs'} style={{marginRight: 5}} >Blogs</Link>
-                        </>
-                    :   null
-                }
+                <Navbar className="nav" variant="underline" bg="light" expand="lg">
+                    <Navbar.Brand>Blog List App</Navbar.Brand>
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                    <Navbar.Collapse id="basic-navbar-nav">
+                        <Nav className="mr-auto" variant="underline" >
+                            {user ? (
+                                <>
+                                    <Nav.Link as={Link} to="/" style={{ marginRight: 5 }}>Home</Nav.Link>
+                                    <Nav.Link as={Link} to="/blogs" style={{ marginRight: 5 }}>Blogs</Nav.Link>
+                                </>
+                            ) : null}
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
                 <Routes>
                     <Route path="/blogs" element={<BlogPageComponent/>} />
                     <Route path="/" element={user ? <HomePageComponent/> : <LoginPageComponent/> } />

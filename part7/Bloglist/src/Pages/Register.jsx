@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux"
 import { setNotification } from "../../redux/Slices/notiSlice"
 import { useNavigate } from "react-router"
 import { registerAction } from "../../redux/Actions/register"
-
+import { Container, Form, Button, InputGroup, FormControl, Alert } from 'react-bootstrap'
 export const RegisterPageComponent = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -27,14 +27,34 @@ export const RegisterPageComponent = () => {
     return(
         <div>
             <h1>Create a new account</h1>
-            <h3>Please fill all the fields, login after you created your account, your username and password must be at least three characters lenght</h3>
-            <form onSubmit={handleRegister} >
-                <input name="username" placeholder="Username"/>
-                <p></p>
-                <input name="password" placeholder="Password"/>
-                <p></p>
-                <button>Create account</button>
-            </form>
+            <h3>Please fill all the fields, login after you created your account, your username and password must be at least three characters length</h3>
+            <Form onSubmit={handleRegister}>
+            <Form.Group controlId="formUsername" style={{marginBottom: 10}} >
+                    <InputGroup>
+                        <FormControl
+                            required
+                            type="text"
+                            name="username"
+                            placeholder="Username"
+                            style={{ maxWidth: '200px' }} // Ajuste de ancho máximo
+                        />
+                    </InputGroup>
+                </Form.Group>
+                <Form.Group controlId="formPassword">
+                    <InputGroup>
+                        <FormControl
+                            required
+                            type="password"
+                            name="password"
+                            placeholder="Password"
+                            style={{ maxWidth: '200px' }} // Ajuste de ancho máximo
+                        />
+                    </InputGroup>
+                </Form.Group>
+                <Button style={{marginTop: 10}} variant="primary" type="submit">
+                    Create account
+                </Button>
+            </Form>
         </div>
     )
 }

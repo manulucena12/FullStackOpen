@@ -5,6 +5,8 @@ import { createBlogAction } from "../../redux/Actions/postBlog"
 import { likeBlogAction } from "../../redux/Actions/likeBlog"
 import { deleteBlogAction } from "../../redux/Actions/delBlog"
 import { useNavigate } from "react-router"
+import {Accordion, Button, Form} from 'react-bootstrap'
+import '../../CSS/Home.css'
 export const BlogPageComponent = () => {
     const [show,setShow] = useState(null)
     const label = show ? 'Cancel' : 'Create a new blog'
@@ -37,41 +39,58 @@ export const BlogPageComponent = () => {
     return (
         <div>
             <h1>Blogs</h1>
-            <ul>
-                {
-                    blogs
-                    .map(blog=>{
-                        return (
-                            <li key={blog.id}>
-                                {blog.title} by @{blog.username} has {blog.likes} likes 
-                                <button style={{marginLeft: 8}} onClick={() => dispatch(likeBlogAction(blog.id)) } >Like</button>
-                                <button style={{marginLeft: 8}} onClick={() => 
-                                        {try {
-                                            dispatch(deleteBlogAction(blog.id,token))
-                                            dispatch(setNotification({name: 'Your blog has been deleted!'}))
-                                        }
-                                        catch(error) {
-                                            console.log(error)
-                                            dispatch(setNotification({name: 'You cannot delete a blog that is not yours!'}))
-                                        }
-                                    }
-                                 } >Delete</button>
-                                <button style={{marginLeft: 8}} onClick={() => navigate(`/blog/${blog.id}`) } >View Blog</button>
-                            </li>
-                        )
-                    })
-                }
-            </ul>
-            <button style={{marginBottom: 5}} onClick={() => setShow(!show) } >{label}</button>
+            <Accordion >
+            {blogs.map((blog, index) => (
+                <Accordion.Item eventKey={index.toString()} key={blog.id}>
+                    <Accordion.Header>
+                        {blog.title} by @{blog.username} has {blog.likes} likes
+                    </Accordion.Header>
+                    <Accordion.Body>
+                        <Button variant="primary" style={{ marginRight: 8 }} onClick={() => dispatch(likeBlogAction(blog.id))}>
+                            Like
+                        </Button>
+                        <Button variant="danger" style={{ marginRight: 8 }} onClick={() => {
+                            try {
+                                dispatch(deleteBlogAction(blog.id, token));
+                                dispatch(setNotification({ name: 'Your blog has been deleted!' }));
+                            } catch (error) {
+                                console.log(error);
+                                dispatch(setNotification({ name: 'You cannot delete a blog that is not yours!' }));
+                            }
+                        }}>
+                            Delete
+                        </Button>
+                        <Button variant="info" onClick={() => navigate(`/blog/${blog.id}`)}>
+                            View Blog
+                        </Button>
+                    </Accordion.Body>
+                </Accordion.Item>
+            ))}
+        </Accordion>
+            <Button className="post" style={{marginTop: 10}} onClick={() => setShow(!show) } >{label}</Button>
             {
                 show
-                ? <form onSubmit={handleBlog} >
-                    <input required placeholder="Title" name="title" />
-                    <p></p>
-                    <input required placeholder="Author" name="author" />
-                    <p></p>
-                    <button>Create</button>
-                    </form>
+                    ?   <Form style={{ marginTop: 10 }} onSubmit={handleBlog}>
+                            <Form.Group className="mb-3" controlId="formTitle">
+                                <Form.Control
+                                    required
+                                    placeholder="Title"
+                                    name="title"
+                                    style={{ width: '300px' }} // Ajusta el ancho aquí
+                                />
+                            </Form.Group>
+                            <Form.Group className="mb-3" controlId="formAuthor">
+                                <Form.Control
+                                    required
+                                    placeholder="Author"
+                                    name="author"
+                                    style={{ width: '300px' }} // Ajusta el ancho aquí
+                                />
+                            </Form.Group>
+                            <Button variant="outline-success" type="submit">
+                                Create
+                            </Button>
+                    </Form>
                 : null
             }
         </div>

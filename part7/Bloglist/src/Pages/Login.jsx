@@ -5,6 +5,7 @@ import { loginService } from "../Services/loginService"
 import { useDispatch } from 'react-redux'
 import { useNavigate } from "react-router-dom"
 import { Link } from "react-router-dom";
+import { Form, Button } from 'react-bootstrap'
 export const LoginPageComponent = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
@@ -34,13 +35,17 @@ export const LoginPageComponent = () => {
     return (
         <div>
             <h1>Login</h1>
-            <form onSubmit={handleLogin} >
-                <input type="text" name="username" placeholder="Username" />
-                <p></p>
-                <input type="password" name="password" placeholder="Password" />
-                <p></p>
-                <button>Login</button>
-            </form>
+            <Form style={{ marginTop: '20px', marginLeft: '5px', width: '300px', marginBottom: '10px' }} onSubmit={handleLogin}>
+                <Form.Group controlId="formUsername" style={{marginBottom: '10px'}} >
+                    <Form.Control type="text" name="username" placeholder="Username" />
+                </Form.Group >
+                <Form.Group controlId="formPassword" style={{marginBottom: '10px'}} >
+                    <Form.Control type="password" name="password" placeholder="Password" />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Login
+                </Button>
+            </Form>
             <Link to={'/register'}>Don't you have an accont? Register now! </Link>
         </div>
     )
