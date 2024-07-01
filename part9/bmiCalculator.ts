@@ -17,4 +17,19 @@ const bmiCalculator = (cm: number, weight: number) : string => {
     return status
 }
 
-console.log(bmiCalculator(175, 76))
+const args = process.argv.slice(2)
+if (args.length < 2) {
+    console.log("Please provide height (cm) and weight (kg)")
+    process.exit(1)
+}
+
+const height = Number(args[0])
+const weight = Number(args[1])
+
+if (isNaN(height) || isNaN(weight)) {
+    console.log("Both height and weight need to be valid numbers.")
+    process.exit(1)
+}
+
+const result = bmiCalculator(height, weight)
+console.log(result)

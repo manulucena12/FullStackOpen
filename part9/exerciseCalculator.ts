@@ -38,4 +38,13 @@ const exerciseCalculator = (hours: Array<number>, goal: number) : Result => {
     return result
 }
 
-console.log(exerciseCalculator([3, 0, 2, 4.5, 0, 3, 1], 2))
+const args = process.argv.slice(2)
+if (args.length < 2) {
+    console.log("Please provide a goal and at least one hour value")
+    process.exit(1);
+}
+const goal = Number(args[0]);
+const hours = args.slice(1).map(arg => Number(arg))
+const result = exerciseCalculator(hours, goal)
+
+console.log(result)
