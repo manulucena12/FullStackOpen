@@ -49,14 +49,44 @@ export const getPatients = () => {
 
 export const newPatient = (body: any) => {
     const {name,occupation,gender,dateOfBirth, ssn} = body
-    const newPatient: Patient = {
-        name,
-        occupation,
-        dateOfBirth,
-        id: crypto.randomUUID(),
-        gender,
-        ssn
+    const parseName = () => {
+        if(typeof name !== 'string'){
+            throw new Error('Type of name is not string')
+        }
     }
-    patients.push(newPatient)
-    return newPatient
+    const parseOcuppation = () => {
+        if(typeof occupation !== 'string'){
+            throw new Error('Occupation type is not string')
+        }
+    }
+    const parseDateOfBirth = () => {
+        if(typeof dateOfBirth !== 'string'){
+            throw new Error('Date of birth type is not string')
+        }
+    }
+    const parseGender = () => {
+        if(gender !== 'male' && gender !== 'female' && gender !== 'other'){
+            throw new Error('Type of name is not string')
+        }
+    }
+    try{
+        parseName()
+        parseOcuppation()
+        parseDateOfBirth()
+        parseGender()
+        const newPatient: Patient = {
+            name,
+            occupation,
+            dateOfBirth,
+            id: crypto.randomUUID(),
+            gender,
+            ssn
+        }
+        patients.push(newPatient)
+        return newPatient
+    }
+    catch(error){
+        console.log(error)
+        return undefined
+    }
 }

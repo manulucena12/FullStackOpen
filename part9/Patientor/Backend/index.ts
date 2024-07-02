@@ -23,7 +23,11 @@ app.get('/api/patients', (req,res) => {
 })
 
 app.post('/api/patients', (req,res) => {
-    res.json(newPatient(req.body))
+    const result = newPatient(req.body)
+    if(result === undefined){
+        return res.status(400).json({error: 'Malformated parameter'})
+    }
+    return res.status(200).json(result)
 })
 
 app.listen(3002, ()=>{
