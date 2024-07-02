@@ -12,3 +12,9 @@ export enum Gender {
     Female = "female",
     Other = "other"
 }
+
+export interface Diagnose {
+    code: string,
+    name: string,
+    latin?: string
+  }
