@@ -46,3 +46,17 @@ export const getPatients = () => {
     const result = patients
     return result
 }
+
+export const newPatient = (body: any) => {
+    const {name,occupation,gender,dateOfBirth, ssn} = body
+    const newPatient: Patient = {
+        name,
+        occupation,
+        dateOfBirth,
+        id: crypto.randomUUID(),
+        gender,
+        ssn
+    }
+    patients.push(newPatient)
+    return newPatient
+}
