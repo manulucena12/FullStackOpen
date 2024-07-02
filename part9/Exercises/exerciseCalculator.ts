@@ -1,6 +1,6 @@
 import { Result } from "../Types/exercises"
 
-const exerciseCalculator = (hours: Array<number>, goal: number) : Result => {
+export const exerciseCalculator = (hours: Array<number>, goal: number) : Result => {
     let trainingDays= 0
     let success = true
     let rating = 1
@@ -37,14 +37,3 @@ const exerciseCalculator = (hours: Array<number>, goal: number) : Result => {
     }
     return result
 }
-
-const args = process.argv.slice(2)
-if (args.length < 2) {
-    console.log("Please provide a goal and at least one hour value")
-    process.exit(1);
-}
-const goal = Number(args[0]);
-const hours = args.slice(1).map(arg => Number(arg))
-const result = exerciseCalculator(hours, goal)
-
-console.log(result)
