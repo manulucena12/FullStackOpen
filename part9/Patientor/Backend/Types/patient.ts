@@ -7,6 +7,8 @@ export interface Patient {
     dateOfBirth?: string;
 }
 
+export type limitedPatient = Omit<Patient, 'ssn'>
+
 export enum Gender {
     Male = "male",
     Female = "female",

@@ -1,6 +1,6 @@
 import { Gender, Patient } from '../Types/patient'
 
-const patients: Patient[] = [
+export const patients: Patient[] = [
     {
         id: "1",
         name: "John Doe",
@@ -37,10 +37,10 @@ const patients: Patient[] = [
         name: "Charles Brown",
         occupation: "Teacher",
         gender: Gender.Male,
-        dateOfBirth: "1975-02-14"
+        dateOfBirth: "1975-02-14",
+        ssn: "12-34-56"
     }
 ]
-
 
 export const getPatients = () => {
     const result = patients
