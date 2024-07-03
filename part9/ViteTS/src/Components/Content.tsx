@@ -1,11 +1,4 @@
-interface Course {
-    name: string,
-    exerciseCount: number
-}
-
-interface ContentProps  {
-    courseParts: Course[]
-}
+import { ContentProps } from '../../Types/course'
 
 export const Content: React.FC<ContentProps> = ({courseParts}) => {
     return  (

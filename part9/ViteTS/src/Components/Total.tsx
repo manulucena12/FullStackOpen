@@ -1,11 +1,4 @@
-interface Course {
-    name: string,
-    exerciseCount: number
-}
-
-interface ContentProps  {
-    courseParts: Course[]
-}
+import { ContentProps } from '../../Types/course'
 
 export const Total: React.FC<ContentProps> = ({courseParts}) => {
     const totalExercises = courseParts.reduce((sum, part) => sum + part.exerciseCount, 0)
