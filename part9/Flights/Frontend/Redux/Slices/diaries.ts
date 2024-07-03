@@ -7,8 +7,11 @@ export const diariesSlice = createSlice({
     reducers: {
         setDiaries(state,action: PayloadAction<Diary[]>){
             return action.payload
+        },
+        addDiary(state,action: PayloadAction<Diary>){
+            state.push(action.payload)
         }
     }
 })
 
-export const { setDiaries } = diariesSlice.actions
+export const { setDiaries, addDiary } = diariesSlice.actions
