@@ -3,6 +3,7 @@ import { Diary } from "../../Types/diaries"
 import { useDispatch } from "react-redux"
 import { createDiaryAction } from "../../Redux/Actions/diaries"
 import { AppDispatch } from "../../Redux/store"
+import { setNotification } from "../../Redux/Slices/notification"
 
 export const DiaryForm: React.FC = () => {
     const dispatch: AppDispatch = useDispatch()
@@ -19,6 +20,8 @@ export const DiaryForm: React.FC = () => {
     const handleDiary = (event: React.SyntheticEvent) => {
         event.preventDefault()
         dispatch(createDiaryAction(newDiary))
+        dispatch(setNotification('Diary created!'))
+        setComment('')
     }
 
     return (
@@ -65,7 +68,7 @@ export const DiaryForm: React.FC = () => {
                     <legend>
                         Tell us something about your day!
                     </legend>
-                    <input onChange={(event) => setComment(event?.target.value)} placeholder="Add comment..." />
+                    <input onChange={(event) => setComment(event?.target.value)} placeholder="Add comment..." value={comment} />
                 </fieldset>
                 <button>Create entry</button>
             </form>

@@ -1,4 +1,3 @@
-import '../CSS/App.css'
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { Diaries } from './Pages/Diaries'
 import { useEffect } from 'react'

@@ -1,6 +1,7 @@
 import { RootState } from "../../Redux/store"
 import { useSelector } from "react-redux"
 import { DiaryForm } from "../Components/Form"
+import { AppNotification } from "../Components/Notification"
 
 export const Diaries: React.FC = () => {
     const diaries = useSelector((state: RootState) => state.diaries )
@@ -23,6 +24,7 @@ export const Diaries: React.FC = () => {
                    ))
                 }
             </ul>
+            <AppNotification/>
             <DiaryForm/>
         </div>
     )
