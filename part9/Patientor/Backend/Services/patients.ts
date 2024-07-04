@@ -7,7 +7,8 @@ export const patients: Patient[] = [
         occupation: "Engineer",
         gender: Gender.Male,
         ssn: "123-45-6789",
-        dateOfBirth: "1980-05-15"
+        dateOfBirth: "1980-05-15",
+        entries: []
     },
     {
         id: "2",
@@ -15,7 +16,8 @@ export const patients: Patient[] = [
         occupation: "Doctor",
         gender: Gender.Female,
         ssn: "987-65-4321",
-        dateOfBirth: "1992-09-22"
+        dateOfBirth: "1992-09-22",
+        entries: []
     },
     {
         id: "3",
@@ -23,14 +25,16 @@ export const patients: Patient[] = [
         occupation: "Student",
         gender: Gender.Other,
         ssn: "456-78-9123",
-        dateOfBirth: "2000-11-30"
+        dateOfBirth: "2000-11-30",
+        entries: []
     },
     {
         id: "4",
         name: "Mary Williams",
         occupation: "Lawyer",
         gender: Gender.Female,
-        ssn: "321-54-6789"
+        ssn: "321-54-6789",
+        entries: []
     },
     {
         id: "5",
@@ -38,13 +42,22 @@ export const patients: Patient[] = [
         occupation: "Teacher",
         gender: Gender.Male,
         dateOfBirth: "1975-02-14",
-        ssn: "12-34-56"
+        ssn: "12-34-56",
+        entries: []
     }
 ]
 
 export const getPatients = () => {
     const result = patients
     return result
+}
+
+export const getPatientById = (id: any) => {
+    const patient: Patient | undefined = patients.find(p => p.id === id)
+    if(patient){
+        return patient
+    }
+    return undefined
 }
 
 export const newPatient = (body: any) => {
@@ -80,7 +93,8 @@ export const newPatient = (body: any) => {
             dateOfBirth,
             id: crypto.randomUUID(),
             gender,
-            ssn
+            ssn,
+            entries: []
         }
         patients.push(newPatient)
         return newPatient
