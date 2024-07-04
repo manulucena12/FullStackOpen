@@ -1,6 +1,6 @@
 import { Diagnose } from "../Types/patient";
 
-const diagnoses: Diagnose[] = [
+const diagnoses: Diagnose[] =[
     { code: 'A00', name: 'Cholera', latin: 'Cholera' },
     { code: 'B01', name: 'Chickenpox', latin: 'Varicella' },
     { code: 'C02', name: 'Malignant neoplasm of stomach', latin: 'Carcinoma ventriculi' },
@@ -20,7 +20,12 @@ const diagnoses: Diagnose[] = [
     { code: 'Q16', name: 'Congenital malformations of ear causing impairment of hearing', latin: 'Malformationes congenitae auris cum defectu auditionis' },
     { code: 'R17', name: 'Unexplained death', latin: 'Mors inexplicata' },
     { code: 'S18', name: 'Open wound of neck', latin: 'Vulnus apertum colli' },
-    { code: 'T19', name: 'Poisoning by, adverse effect of and underdosing of other and unspecified drugs, medicaments and biological substances', latin: 'Intoxicatio ab aliis et non specificatis medicamentis, pharmacis et substantiis biologicis' }
+    { code: 'T19', name: 'Poisoning by, adverse effect of and underdosing of other and unspecified drugs, medicaments and biological substances', latin: 'Intoxicatio ab aliis et non specificatis medicamentis, pharmacis et substantiis biologicis' },
+    { code: 'M54.5', name: 'Low back pain', latin: 'Dorsalgia inferior' },
+    { code: 'Z00.0', name: 'General medical examination', latin: 'Examen generalis medicus' }, 
+    { code: 'F41.9', name: 'Anxiety disorder, unspecified', latin: 'Anxietas non specificata' }, 
+    { code: 'S52.5', name: 'Fracture of lower end of radius', latin: 'Fractura radii inferioris' }, 
+    { code: 'J20.9', name: 'Acute bronchitis, unspecified', latin: 'Bronchitis acuta non specificata' } 
 ]
 
 export const getDiagnoses = () => {
